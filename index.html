@@ -3,43 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>RENIS | Plataforma Renal</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pizzip/3.1.4/pizzip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.37.9/docxtemplater.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-background:#f4f8fc;
-color:#0c2340;
+font-family:'Inter',sans-serif;
+background:
+radial-gradient(circle at top left, rgba(37,99,235,0.15), transparent 30%),
+radial-gradient(circle at bottom right, rgba(124,58,237,0.12), transparent 30%),
+linear-gradient(135deg,#020617,#071427,#0f172a);
+color:#e2e8f0;
+min-height:100vh;
+overflow-x:hidden;
 }
 
 nav{
-padding:22px 8%;
-background:white;
-box-shadow:0 2px 20px rgba(0,0,0,0.05);
+padding:24px 8%;
 position:sticky;
 top:0;
-z-index:100;
+background:rgba(2,6,23,0.75);
+backdrop-filter:blur(18px);
+border-bottom:1px solid rgba(255,255,255,0.08);
+z-index:999;
 }
 
 .logo{
-font-size:2rem;
-font-weight:800;
-letter-spacing:5px;
-color:#0b4ea2;
+font-family:'Orbitron',sans-serif;
+font-size:2.3rem;
+font-weight:900;
+letter-spacing:8px;
+background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
 .hero{
@@ -51,14 +49,16 @@ align-items:center;
 }
 
 .hero h1{
+font-family:'Orbitron',sans-serif;
 font-size:4rem;
 line-height:1.1;
-margin-bottom:25px;
-font-weight:800;
+text-transform:uppercase;
+letter-spacing:3px;
+margin-bottom:20px;
 }
 
 .hero h1 span{
-background:linear-gradient(90deg,#0b4ea2,#7b2cbf);
+background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
@@ -66,102 +66,98 @@ background:linear-gradient(90deg,#0b4ea2,#7b2cbf);
 .hero p{
 line-height:2;
 font-size:1.1rem;
-color:#526070;
-margin-bottom:35px;
+color:#cbd5e1;
+margin-bottom:25px;
 }
 
 .btn{
-padding:18px 35px;
+padding:18px 32px;
 border:none;
 border-radius:18px;
-background:linear-gradient(135deg,#0b4ea2,#0056d6);
+background:linear-gradient(135deg,#2563eb,#7c3aed);
 color:white;
-font-weight:700;
+font-weight:800;
+font-family:'Orbitron',sans-serif;
+letter-spacing:1px;
 cursor:pointer;
-font-size:1rem;
-box-shadow:0 15px 40px rgba(0,86,214,0.25);
+box-shadow:0 15px 40px rgba(59,130,246,0.35);
+transition:all .3s ease;
 }
 
-.qr-card{
-background:white;
-padding:35px;
-border-radius:35px;
-box-shadow:0 20px 60px rgba(0,0,0,0.08);
-text-align:center;
+.btn:hover{
+transform:translateY(-4px);
 }
 
-.qr-card img{
+.card,.panel,.template-item,.config-box{
+background:rgba(15,23,42,0.72);
+border:1px solid rgba(255,255,255,0.08);
+backdrop-filter:blur(18px);
+box-shadow:0 25px 80px rgba(0,0,0,0.45);
+}
+
+.card{padding:30px;border-radius:28px;}
+.section{padding:0 8% 80px;}
+
+.section-title,.table th,.template-item h3{
+font-family:'Orbitron',sans-serif;
+letter-spacing:2px;
+text-transform:uppercase;
+color:#93c5fd;
+}
+
+.config-box{
+padding:30px;
+border-radius:24px;
+margin-bottom:35px;
+}
+
+.config-box input,.template-item input,.search{
 width:100%;
-max-width:320px;
-padding:15px;
-background:white;
-border-radius:25px;
+padding:16px;
+border-radius:14px;
+border:1px solid rgba(255,255,255,0.08);
+background:#020617;
+color:white;
 }
 
-.section{
-padding:20px 8% 100px;
+.template-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+margin:30px 0 40px;
+}
+
+.template-item{
+padding:25px;
+border-radius:22px;
 }
 
 .panel{
-background:white;
-padding:40px;
-border-radius:35px;
-box-shadow:0 20px 60px rgba(0,0,0,0.08);
+padding:35px;
+border-radius:28px;
 overflow:auto;
 }
 
-.panel-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:30px;
-flex-wrap:wrap;
-gap:20px;
-}
-
 .search{
-padding:18px 22px;
-border-radius:18px;
-border:1px solid #dbe4f0;
-width:320px;
-font-size:1rem;
-outline:none;
+margin-bottom:25px;
+font-family:'Orbitron',sans-serif;
 }
 
 .table{
 width:100%;
 border-collapse:collapse;
-min-width:900px;
+min-width:850px;
 }
 
 .table th{
-background:#f3f7fd;
-padding:18px;
+background:rgba(30,41,59,0.9);
+padding:16px;
 text-align:left;
-color:#0b4ea2;
 }
 
 .table td{
-padding:18px;
-border-bottom:1px solid #edf2f7;
-}
-
-.status{
-padding:8px 14px;
-border-radius:50px;
-font-size:0.85rem;
-font-weight:700;
-display:inline-block;
-}
-
-.active{
-background:#dcfce7;
-color:#166534;
-}
-
-.follow{
-background:#dbeafe;
-color:#1d4ed8;
+padding:16px;
+border-bottom:1px solid rgba(255,255,255,0.06);
 }
 
 .actions{
@@ -171,45 +167,62 @@ flex-wrap:wrap;
 }
 
 .actions button{
-padding:12px 18px;
+padding:10px 14px;
 border:none;
-border-radius:14px;
+border-radius:12px;
 color:white;
 font-weight:700;
 cursor:pointer;
+font-family:'Orbitron',sans-serif;
 }
 
-.epi{background:#0b4ea2;}
+.epi{background:#2563eb;}
 .ref{background:#16a34a;}
 .tras{background:#9333ea;}
 
+.notice{
+margin-top:20px;
+padding:22px;
+background:rgba(37,99,235,0.12);
+border:1px solid rgba(147,197,253,0.25);
+color:#dbeafe;
+border-radius:16px;
+line-height:1.8;
+}
+
+.status{
+margin-top:12px;
+font-weight:600;
+font-size:.95rem;
+}
+
+.success{color:#4ade80;}
+.error{color:#f87171;}
+.warning{color:#facc15;}
+
 footer{
-background:#071a33;
-color:white;
-padding:60px 8%;
-text-align:center;
-margin-top:80px;
+margin-top:90px;
+padding:70px 8%;
+background:linear-gradient(135deg,#020617,#0f172a,#111827);
+}
+
+.footer-brand{
+font-family:'Orbitron',sans-serif;
+font-size:3rem;
+font-weight:900;
+letter-spacing:8px;
+background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:20px;
 }
 
 @media(max-width:900px){
-
-.hero{
-grid-template-columns:1fr;
+.hero{grid-template-columns:1fr;}
+.hero h1{font-size:2.8rem;}
 }
-
-.hero h1{
-font-size:3rem;
-}
-
-.search{
-width:100%;
-}
-
-}
-
 </style>
 </head>
-
 <body>
 
 <nav>
@@ -217,212 +230,324 @@ width:100%;
 </nav>
 
 <section class="hero">
-
 <div>
-
-<h1>
-<span>RENIS</span>
-</h1>
-
+<h1>Sistema <span>RENIS</span></h1>
 <p>
-Plataforma inteligente para pacientes renales  con generación automática de documentos hospitalarios oficiales. primera fase en contruccion
+Plataforma hospitalaria renal con sincronización inteligente y automatización documental.
 </p>
 
 <button class="btn" onclick="window.open('https://forms.gle/pAb2KBwuUJjMxMwP6')">
-🚀 Abrir Formulario
+Abrir Formulario
 </button>
 
+<div class="notice">
+RENIS utiliza Google Sheets como base de datos clínica dinámica.
+</div>
 </div>
 
-<div class="qr-card">
-
-<img src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=https://forms.gle/pAb2KBwuUJjMxMwP6">
-
-<p style="margin-top:20px;color:#526070;">
-Escanea para registrar pacientes.
-</p>
-
+<div class="card">
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://forms.gle/pAb2KBwuUJjMxMwP6" style="width:100%;border-radius:20px;" alt="QR">
 </div>
-
 </section>
 
 <section class="section">
 
-<div class="panel">
+<div class="config-box">
+<h2 class="section-title">Conexión Google Sheets</h2>
 
-<div class="panel-header">
+<input type="text" id="sheetUrlInput" placeholder="https://opensheet.elk.sh/TU_ID/Hoja1">
 
-<div>
-<h2 style="font-size:2rem;color:#0b4ea2;">
-Pacientes Registrados
+<button class="btn" style="margin-top:20px;" onclick="guardarSheetURL()">
+Guardar Conexión
+</button>
+
+<div id="sheetStatus" class="status warning">
+Modo demo local activo.
+</div>
+</div>
+
+<h2 class="section-title" style="margin-bottom:20px;">
+Plantillas Oficiales
 </h2>
 
-<p style="color:#667085;margin-top:8px;">
-Sistema hospitalario renal
-</p>
+<div class="template-grid">
+<div class="template-item">
+<h3>Epicrisis</h3>
+<input type="file" id="epicrisisFile" accept=".docx">
+<div id="epicrisisStatus" class="status"></div>
 </div>
 
-<input
-id="busqueda"
-class="search"
-type="text"
-placeholder="🔎 Buscar paciente"
->
-
+<div class="template-item">
+<h3>Referencia</h3>
+<input type="file" id="referenciaFile" accept=".docx">
+<div id="referenciaStatus" class="status"></div>
 </div>
+
+<div class="template-item">
+<h3>Traslado</h3>
+<input type="file" id="trasladoFile" accept=".docx">
+<div id="trasladoStatus" class="status"></div>
+</div>
+</div>
+
+<div class="panel">
+<input id="busqueda" class="search" placeholder="Buscar paciente">
 
 <table class="table" id="tabla">
-
 <thead>
-
 <tr>
 <th>Expediente</th>
 <th>Paciente</th>
 <th>Edad</th>
 <th>Diagnóstico</th>
-<th>Estado</th>
 <th>Documentos</th>
 </tr>
-
 </thead>
-
-<tbody>
-
-<tr>
-
-<td>REN-001</td>
-<td>Juan Pérez</td>
-<td>54 años</td>
-<td>ERC Estadio IV</td>
-
-<td>
-<span class="status active">
-Activo
-</span>
-</td>
-
-<td>
-
-<div class="actions">
-
-<button
-class="epi"
-onclick="generarDocumento('templates/epicrisis.docx','Epicrisis_Juan_Perez.docx')"
->
-Epicrisis
-</button>
-
-<button
-class="ref"
-onclick="generarDocumento('templates/referencia.docx','Referencia_Juan_Perez.docx')"
->
-Referencia
-</button>
-
-<button
-class="tras"
-onclick="generarDocumento('templates/traslado.docx','Traslado_Juan_Perez.docx')"
->
-Traslado
-</button>
-
-</div>
-
-</td>
-
-</tr>
-
-</tbody>
-
+<tbody></tbody>
 </table>
-
 </div>
 
 </section>
 
 <footer>
-
-<h2>RENIS</h2>
-
-<p>
-expediente renal hospitalario by
-<br><br>
-Dr. Luis E Guardado
+<div class="footer-brand">RENIS</div>
+<p style="line-height:2;color:#cbd5e1;max-width:700px;">
+Plataforma concebida y desarrollada por <strong style="color:#93c5fd;">Dr. Luis Ernesto Guardado</strong>
 </p>
-
 </footer>
 
 <script>
+function loadScript(src){
+return new Promise((resolve,reject)=>{
+const script = document.createElement('script');
+script.src = src;
+script.onload = resolve;
+script.onerror = reject;
+document.head.appendChild(script);
+});
+}
 
-const buscador = document.getElementById('busqueda');
+async function cargarLibrerias(){
+await loadScript('https://cdn.jsdelivr.net/npm/pizzip@3.1.4/dist/pizzip.min.js');
+await loadScript('https://cdn.jsdelivr.net/npm/docxtemplater@3.37.9/build/docxtemplater.js');
+await loadScript('https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js');
+}
 
-buscador.addEventListener('keyup',()=>{
+const templates = {
+Epicrisis:null,
+Referencia:null,
+Traslado:null
+};
 
-const valor = buscador.value.toLowerCase();
+let pacientes = {
+PACIENTE_1:{
+Nombre:'Juan',
+PrimerApellido:'Pérez',
+Edad:'54',
+Sexo:'Masculino',
+Expediente:'REN-001',
+Diagnostico:'ERC Estadio IV',
+Tratamiento:'Hemodiálisis'
+},
+PACIENTE_2:{
+Nombre:'María Fernanda',
+PrimerApellido:'López',
+Edad:'63',
+Sexo:'Femenino',
+Expediente:'REN-002',
+Diagnostico:'Hemodiálisis Crónica',
+Tratamiento:'Hemodiálisis'
+}
+};
+
+function actualizarEstado(id,texto,clase){
+const el = document.getElementById(id);
+el.textContent = texto;
+el.className = 'status ' + clase;
+}
+
+function guardarLocal(key,value){
+localStorage.setItem(key,value);
+}
+
+function obtenerLocal(key){
+return localStorage.getItem(key);
+}
+
+async function guardarSheetURL(){
+const url = document.getElementById('sheetUrlInput').value.trim();
+
+if(!url.includes('opensheet.elk.sh')){
+actualizarEstado('sheetStatus','URL inválida','error');
+return;
+}
+
+guardarLocal('sheet_url',url);
+actualizarEstado('sheetStatus','Conexión guardada','success');
+
+await cargarPacientesDesdeSheets();
+}
+
+function renderizarPacientes(){
+const tbody = document.querySelector('#tabla tbody');
+tbody.innerHTML = '';
+
+Object.keys(pacientes).forEach(key=>{
+const p = pacientes[key];
+
+const fila = document.createElement('tr');
+
+fila.innerHTML = `
+<td>${p.Expediente}</td>
+<td>${p.Nombre} ${p.PrimerApellido}</td>
+<td>${p.Edad} años</td>
+<td>${p.Diagnostico}</td>
+<td>
+<div class="actions">
+<button class="epi" onclick="generarDocumento('Epicrisis','${key}')">Epicrisis</button>
+<button class="ref" onclick="generarDocumento('Referencia','${key}')">Referencia</button>
+<button class="tras" onclick="generarDocumento('Traslado','${key}')">Traslado</button>
+</div>
+</td>
+`;
+
+tbody.appendChild(fila);
+});
+}
+
+async function cargarPacientesDesdeSheets(){
+try{
+const sheetURL = obtenerLocal('sheet_url');
+
+if(!sheetURL){
+renderizarPacientes();
+return;
+}
+
+const response = await fetch(sheetURL);
+
+if(!response.ok){
+throw new Error('No se pudo conectar con Google Sheets');
+}
+
+const datos = await response.json();
+
+if(!Array.isArray(datos) || datos.length === 0){
+throw new Error('Sin datos disponibles');
+}
+
+pacientes = {};
+
+datos.forEach((p,index)=>{
+const key = 'PACIENTE_' + index;
+
+pacientes[key] = {
+Nombre:p.Nombre || '',
+PrimerApellido:p['Primer Apellido'] || '',
+Edad:p.Edad || '',
+Sexo:p.Sexo || '',
+Expediente:p.Expediente || '',
+Diagnostico:p.Diagnostico || '',
+Tratamiento:p.Tratamiento || ''
+};
+});
+
+renderizarPacientes();
+actualizarEstado('sheetStatus','Google Sheets conectado','success');
+
+}catch(error){
+console.error(error);
+actualizarEstado('sheetStatus','Error conexión Sheets - usando demo','warning');
+renderizarPacientes();
+}
+}
+
+async function generarDocumento(tipo,pacienteKey){
+try{
+const file = templates[tipo];
+
+if(!file){
+alert('Debes cargar plantilla ' + tipo);
+return;
+}
+
+const paciente = pacientes[pacienteKey];
+
+const content = await file.arrayBuffer();
+const zip = new PizZip(content);
+const DocxtemplaterClass = window.docxtemplater || window.Docxtemplater;
+
+const doc = new DocxtemplaterClass(zip);
+
+doc.setOptions({
+delimiters:{start:'<<',end:'>>'}
+});
+
+doc.render({
+'Nombre':paciente.Nombre,
+'Primer Apellido':paciente.PrimerApellido,
+'Edad':paciente.Edad,
+'Sexo':paciente.Sexo,
+'Expediente':paciente.Expediente,
+'Diagnósticos de Ingreso':paciente.Diagnostico,
+'Tratamiento':paciente.Tratamiento
+});
+
+const blob = doc.getZip().generate({
+type:'blob',
+mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+});
+
+saveAs(blob,`${tipo}_${paciente.Expediente}.docx`);
+
+}catch(error){
+console.error(error);
+alert('Error generando documento');
+}
+}
+
+function configurarEventos(){
+document.getElementById('busqueda').addEventListener('keyup',function(){
+const valor = this.value.toLowerCase();
 
 const filas = document.querySelectorAll('#tabla tbody tr');
 
 filas.forEach(fila=>{
-
 const texto = fila.innerText.toLowerCase();
-
-fila.style.display = texto.includes(valor)
-? ''
-: 'none';
-
+fila.style.display = texto.includes(valor) ? '' : 'none';
+});
 });
 
-});
+const inputs = [
+{id:'epicrisisFile',key:'Epicrisis',status:'epicrisisStatus'},
+{id:'referenciaFile',key:'Referencia',status:'referenciaStatus'},
+{id:'trasladoFile',key:'Traslado',status:'trasladoStatus'}
+];
 
-async function generarDocumento(templatePath,outputName){
+inputs.forEach(item=>{
+document.getElementById(item.id).addEventListener('change',e=>{
+const file = e.target.files[0];
 
-try{
-
-const response = await fetch(templatePath);
-
-const content = await response.arrayBuffer();
-
-const zip = new PizZip(content);
-
-const doc = new window.docxtemplater(zip,{
-paragraphLoop:true,
-linebreaks:true
-});
-
-doc.render({
-
-nombre:'Juan Pérez',
-edad:'54',
-sexo:'Masculino',
-expediente:'REN-001',
-diagnostico:'ERC Estadio IV',
-tratamiento:'Hemodiálisis',
-telefono:'9999-9999',
-direccion:'San Pedro Sula'
-
-});
-
-const blob = doc.getZip().generate({
-
-type:'blob',
-
-mimeType:
-'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-
-});
-
-saveAs(blob,outputName);
-
-}catch(error){
-
-console.error(error);
-
-alert('Error generando documento');
-
+if(!file){
+return;
 }
 
+templates[item.key] = file;
+actualizarEstado(item.status,'Plantilla cargada','success');
+});
+});
 }
 
+async function iniciarSistema(){
+await cargarLibrerias();
+configurarEventos();
+await cargarPacientesDesdeSheets();
+
+console.assert(typeof generarDocumento === 'function','generarDocumento debe existir');
+console.assert(document.querySelectorAll('.actions button').length >= 3,'Botones no encontrados');
+}
+
+iniciarSistema();
 </script>
 
 </body>
