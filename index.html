@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RENIS | Plataforma Renal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pizzip/3.1.4/pizzip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.37.9/docxtemplater.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:#f4f8fc;
+color:#0c2340;
+}
+
+nav{
+padding:22px 8%;
+background:white;
+box-shadow:0 2px 20px rgba(0,0,0,0.05);
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.logo{
+font-size:2rem;
+font-weight:800;
+letter-spacing:5px;
+color:#0b4ea2;
+}
+
+.hero{
+padding:80px 8%;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:50px;
+align-items:center;
+}
+
+.hero h1{
+font-size:4rem;
+line-height:1.1;
+margin-bottom:25px;
+font-weight:800;
+}
+
+.hero h1 span{
+background:linear-gradient(90deg,#0b4ea2,#7b2cbf);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.hero p{
+line-height:2;
+font-size:1.1rem;
+color:#526070;
+margin-bottom:35px;
+}
+
+.btn{
+padding:18px 35px;
+border:none;
+border-radius:18px;
+background:linear-gradient(135deg,#0b4ea2,#0056d6);
+color:white;
+font-weight:700;
+cursor:pointer;
+font-size:1rem;
+box-shadow:0 15px 40px rgba(0,86,214,0.25);
+}
+
+.qr-card{
+background:white;
+padding:35px;
+border-radius:35px;
+box-shadow:0 20px 60px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+.qr-card img{
+width:100%;
+max-width:320px;
+padding:15px;
+background:white;
+border-radius:25px;
+}
+
+.section{
+padding:20px 8% 100px;
+}
+
+.panel{
+background:white;
+padding:40px;
+border-radius:35px;
+box-shadow:0 20px 60px rgba(0,0,0,0.08);
+overflow:auto;
+}
+
+.panel-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+flex-wrap:wrap;
+gap:20px;
+}
+
+.search{
+padding:18px 22px;
+border-radius:18px;
+border:1px solid #dbe4f0;
+width:320px;
+font-size:1rem;
+outline:none;
+}
+
+.table{
+width:100%;
+border-collapse:collapse;
+min-width:900px;
+}
+
+.table th{
+background:#f3f7fd;
+padding:18px;
+text-align:left;
+color:#0b4ea2;
+}
+
+.table td{
+padding:18px;
+border-bottom:1px solid #edf2f7;
+}
+
+.status{
+padding:8px 14px;
+border-radius:50px;
+font-size:0.85rem;
+font-weight:700;
+display:inline-block;
+}
+
+.active{
+background:#dcfce7;
+color:#166534;
+}
+
+.follow{
+background:#dbeafe;
+color:#1d4ed8;
+}
+
+.actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.actions button{
+padding:12px 18px;
+border:none;
+border-radius:14px;
+color:white;
+font-weight:700;
+cursor:pointer;
+}
+
+.epi{background:#0b4ea2;}
+.ref{background:#16a34a;}
+.tras{background:#9333ea;}
+
+footer{
+background:#071a33;
+color:white;
+padding:60px 8%;
+text-align:center;
+margin-top:80px;
+}
+
+@media(max-width:900px){
+
+.hero{
+grid-template-columns:1fr;
+}
+
+.hero h1{
+font-size:3rem;
+}
+
+.search{
+width:100%;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+<div class="logo">RENIS</div>
+</nav>
+
+<section class="hero">
+
+<div>
+
+<h1>
+Sistema <span>RENIS</span>
+</h1>
+
+<p>
+Plataforma inteligente para pacientes renales con generación automática de documentos hospitalarios oficiales.
+</p>
+
+<button class="btn" onclick="window.open('https://forms.gle/pAb2KBwuUJjMxMwP6')">
+🚀 Abrir Formulario
+</button>
+
+</div>
+
+<div class="qr-card">
+
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=https://forms.gle/pAb2KBwuUJjMxMwP6">
+
+<p style="margin-top:20px;color:#526070;">
+Escanea para registrar pacientes.
+</p>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="panel">
+
+<div class="panel-header">
+
+<div>
+<h2 style="font-size:2rem;color:#0b4ea2;">
+Pacientes Registrados
+</h2>
+
+<p style="color:#667085;margin-top:8px;">
+Sistema hospitalario renal
+</p>
+</div>
+
+<input
+id="busqueda"
+class="search"
+type="text"
+placeholder="🔎 Buscar paciente"
+>
+
+</div>
+
+<table class="table" id="tabla">
+
+<thead>
+
+<tr>
+<th>Expediente</th>
+<th>Paciente</th>
+<th>Edad</th>
+<th>Diagnóstico</th>
+<th>Estado</th>
+<th>Documentos</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>REN-001</td>
+<td>Juan Pérez</td>
+<td>54 años</td>
+<td>ERC Estadio IV</td>
+
+<td>
+<span class="status active">
+Activo
+</span>
+</td>
+
+<td>
+
+<div class="actions">
+
+<button
+class="epi"
+onclick="generarDocumento('templates/epicrisis.docx','Epicrisis_Juan_Perez.docx')"
+>
+Epicrisis
+</button>
+
+<button
+class="ref"
+onclick="generarDocumento('templates/referencia.docx','Referencia_Juan_Perez.docx')"
+>
+Referencia
+</button>
+
+<button
+class="tras"
+onclick="generarDocumento('templates/traslado.docx','Traslado_Juan_Perez.docx')"
+>
+Traslado
+</button>
+
+</div>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<footer>
+
+<h2>RENIS</h2>
+
+<p>
+Sistema renal hospitalario digital
+<br><br>
+Dr. Luis E Guardado
+</p>
+
+</footer>
+
+<script>
+
+const buscador = document.getElementById('busqueda');
+
+buscador.addEventListener('keyup',()=>{
+
+const valor = buscador.value.toLowerCase();
+
+const filas = document.querySelectorAll('#tabla tbody tr');
+
+filas.forEach(fila=>{
+
+const texto = fila.innerText.toLowerCase();
+
+fila.style.display = texto.includes(valor)
+? ''
+: 'none';
+
+});
+
+});
+
+async function generarDocumento(templatePath,outputName){
+
+try{
+
+const response = await fetch(templatePath);
+
+const content = await response.arrayBuffer();
+
+const zip = new PizZip(content);
+
+const doc = new window.docxtemplater(zip,{
+paragraphLoop:true,
+linebreaks:true
+});
+
+doc.render({
+
+nombre:'Juan Pérez',
+edad:'54',
+sexo:'Masculino',
+expediente:'REN-001',
+diagnostico:'ERC Estadio IV',
+tratamiento:'Hemodiálisis',
+telefono:'9999-9999',
+direccion:'San Pedro Sula'
+
+});
+
+const blob = doc.getZip().generate({
+
+type:'blob',
+
+mimeType:
+'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+
+});
+
+saveAs(blob,outputName);
+
+}catch(error){
+
+console.error(error);
+
+alert('Error generando documento');
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
