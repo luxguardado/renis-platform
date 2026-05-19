@@ -81,6 +81,31 @@ footer{padding:60px 8%;margin-top:60px}
 </style>
 </head>
 <body>
+
+<div id="loginScreen" style="position:fixed;inset:0;background:linear-gradient(135deg,#020617,#0f172a,#111827);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;">
+<div style="width:100%;max-width:420px;background:rgba(15,23,42,.92);border:1px solid rgba(255,255,255,.08);border-radius:28px;padding:40px;backdrop-filter:blur(18px);box-shadow:0 25px 80px rgba(0,0,0,.45)">
+<div style="text-align:center;margin-bottom:30px;">
+<h1 style="font-family:'Orbitron',sans-serif;font-size:3rem;letter-spacing:8px;background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">RENIS</h1>
+<p style="color:#94a3b8;margin-top:10px;">Acceso Clínico Seguro</p>
+</div>
+
+<input id="usuario" type="text" placeholder="Usuario" style="margin-bottom:18px;">
+<input id="password" type="password" placeholder="Contraseña">
+
+<button class="btn" style="width:100%;margin-top:25px;" onclick="iniciarSesion()">Ingresar al Sistema</button>
+
+<div id="loginError" style="margin-top:18px;color:#ef4444;text-align:center;font-weight:600;display:none;">
+Usuario o contraseña incorrectos
+</div>
+
+<div style="margin-top:30px;text-align:center;color:#64748b;font-size:.9rem;line-height:1.8;">
+Sistema desarrollado por<br>
+<strong style="color:#93c5fd">Dr. Luis Ernesto Guardado</strong>
+</div>
+</div>
+</div>
+
+<div id="sistemaRENIS" style="display:none;">
 <nav>
 <div class="logo">RENIS</div>
 </nav>
@@ -157,16 +182,39 @@ alert('Documento aún no generado por Autocrat');
 return;
 }
 
-let cleanUrl=url.trim();
+let cleanUrl=String(url).trim();
+
+console.log('URL original:',cleanUrl);
+
+if(cleanUrl.includes('HYPERLINK')){
+const match=cleanUrl.match(/https?:\/\/[^\"]+/);
+if(match){
+cleanUrl=match[0];
+}
+}
 
 if(cleanUrl.includes('drive.google.com')){
 cleanUrl=cleanUrl
 .replace('/edit?usp=drivesdk','/view')
+.replace('/edit?usp=sharing','/view')
 .replace('/edit','/view');
 }
 
-console.log('Abriendo documento:',cleanUrl);
-window.open(cleanUrl,'_blank');
+if(cleanUrl.includes('docs.google.com/document/d/')){
+const docId=cleanUrl.split('/d/')[1]?.split('/')[0];
+if(docId){
+cleanUrl=`https://docs.google.com/document/d/${docId}/edit`;
+}
+}
+
+if(!cleanUrl.startsWith('http')){
+alert('El enlace del documento es inválido');
+console.error('URL inválida:',cleanUrl);
+return;
+}
+
+console.log('Abriendo documento limpio:',cleanUrl);
+window.open(cleanUrl,'_blank','noopener,noreferrer');
 }
 
 function renderizarPacientes(){
@@ -224,9 +272,9 @@ Edad:p['EDAD'] || '--',
 Diagnostico:p['1. DIAGNOSTICO '] || p['2. DIAGNOSTICO'] || 'No especificado',
 FechaRegistro:p['FECHA DE INGRESO'] || '--',
 HoraRegistro:p['HORA DE INGRESO HOSPITALARIO'] || '--',
-EpicrisisDOCX:p['Link to merged Doc - epicrisis 2.0'] || p['Merged Doc URL - epicrisis 2.0'] || '',
-ReferenciaDOCX:p['Link to merged Doc - referencias 2.0'] || p['Merged Doc URL - referencias 2.0'] || '',
-TrasladoDOCX:p['Link to merged Doc - traslado 2.0'] || p['Merged Doc URL - traslado 2.0'] || '',
+EpicrisisDOCX:p['Link to merged Doc - epicrisis 2.0'] || p['Merged Doc URL - epicrisis 2.0'] || p['Merged Doc ID - epicrisis 2.0'] || '',
+ReferenciaDOCX:p['Link to merged Doc - referencias 2.0'] || p['Merged Doc URL - referencias 2.0'] || p['Merged Doc ID - referencias 2.0'] || '',
+TrasladoDOCX:p['Link to merged Doc - traslado 2.0'] || p['Merged Doc URL - traslado 2.0'] || p['Merged Doc ID - traslado 2.0'] || '',
 FotoIdentidad:p['FOTO DE LA IDENTIDAD '] || p['FOTO DE LA IDENTIDAD1'] || ''
 };
 });
@@ -259,6 +307,42 @@ console.assert(OPENSHEET_URL.includes('opensheet'),'OpenSheet requerido');
 }
 
 iniciarSistema();
+</script>
+</div>
+
+<script>
+const USUARIO_RENIS='admin';
+const PASSWORD_RENIS='renis2026';
+
+function iniciarSesion(){
+const usuario=document.getElementById('usuario').value.trim();
+const password=document.getElementById('password').value.trim();
+const error=document.getElementById('loginError');
+
+if(usuario===USUARIO_RENIS && password===PASSWORD_RENIS){
+localStorage.setItem('renis_auth','true');
+document.getElementById('loginScreen').style.display='none';
+document.getElementById('sistemaRENIS').style.display='block';
+}else{
+error.style.display='block';
+}
+}
+
+function verificarSesion(){
+const auth=localStorage.getItem('renis_auth');
+
+if(auth==='true'){
+document.getElementById('loginScreen').style.display='none';
+document.getElementById('sistemaRENIS').style.display='block';
+}
+}
+
+function cerrarSesion(){
+localStorage.removeItem('renis_auth');
+location.reload();
+}
+
+verificarSesion();
 </script>
 </body>
 </html>
