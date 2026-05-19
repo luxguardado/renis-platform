@@ -5,226 +5,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RENIS | Plataforma Renal</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-
+*{margin:0;padding:0;box-sizing:border-box}
 body{
 font-family:'Inter',sans-serif;
-background:
-radial-gradient(circle at top left, rgba(37,99,235,0.15), transparent 30%),
-radial-gradient(circle at bottom right, rgba(124,58,237,0.12), transparent 30%),
-linear-gradient(135deg,#020617,#071427,#0f172a);
+background:#020617;
+background-image:radial-gradient(circle at top left,rgba(59,130,246,.15),transparent 30%),radial-gradient(circle at bottom right,rgba(139,92,246,.12),transparent 30%);
 color:#e2e8f0;
 min-height:100vh;
-overflow-x:hidden;
 }
-
-nav{
-padding:24px 8%;
-position:sticky;
-top:0;
-background:rgba(2,6,23,0.75);
-backdrop-filter:blur(18px);
-border-bottom:1px solid rgba(255,255,255,0.08);
-z-index:999;
-}
-
+nav{padding:24px 8%;background:rgba(2,6,23,.92);border-bottom:1px solid rgba(255,255,255,.08)}
 .logo{
 font-family:'Orbitron',sans-serif;
-font-size:2.3rem;
+font-size:2.5rem;
 font-weight:900;
 letter-spacing:8px;
 background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
-
-.hero{
-padding:80px 8%;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:50px;
-align-items:center;
-}
-
-.hero h1{
-font-family:'Orbitron',sans-serif;
-font-size:4rem;
-line-height:1.1;
-text-transform:uppercase;
-letter-spacing:3px;
-margin-bottom:20px;
-}
-
-.hero h1 span{
-background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-
-.hero p{
-line-height:2;
-font-size:1.1rem;
-color:#cbd5e1;
-margin-bottom:25px;
-}
-
+.hero,.section{padding:60px 8%}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.hero h1{font-family:'Orbitron',sans-serif;font-size:4rem;margin-bottom:20px}
+.hero h1 span{background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{line-height:1.8;color:#cbd5e1}
+.card,.panel,.config-box,.notice{background:rgba(15,23,42,.75);border:1px solid rgba(255,255,255,.08);border-radius:24px;backdrop-filter:blur(16px)}
+.card,.config-box,.panel,.notice{padding:30px}
+.notice,.config-box,.panel{margin-bottom:30px}
 .btn{
-padding:18px 32px;
+padding:16px 28px;
 border:none;
-border-radius:18px;
+border-radius:16px;
 background:linear-gradient(135deg,#2563eb,#7c3aed);
 color:white;
-font-weight:800;
+font-weight:700;
 font-family:'Orbitron',sans-serif;
-letter-spacing:1px;
 cursor:pointer;
-box-shadow:0 15px 40px rgba(59,130,246,0.35);
-transition:all .3s ease;
+margin-top:20px;
 }
-
-.btn:hover{
-transform:translateY(-4px);
-}
-
-.card,.panel,.template-item,.config-box{
-background:rgba(15,23,42,0.72);
-border:1px solid rgba(255,255,255,0.08);
-backdrop-filter:blur(18px);
-box-shadow:0 25px 80px rgba(0,0,0,0.45);
-}
-
-.card{padding:30px;border-radius:28px;}
-.section{padding:0 8% 80px;}
-
-.section-title,.table th,.template-item h3{
-font-family:'Orbitron',sans-serif;
-letter-spacing:2px;
-text-transform:uppercase;
-color:#93c5fd;
-}
-
-.config-box{
-padding:30px;
-border-radius:24px;
-margin-bottom:35px;
-}
-
-.config-box input,.template-item input,.search{
+.section-title{font-family:'Orbitron',sans-serif;letter-spacing:2px;margin-bottom:20px;color:#93c5fd}
+input{
 width:100%;
 padding:16px;
 border-radius:14px;
-border:1px solid rgba(255,255,255,0.08);
+border:1px solid rgba(255,255,255,.08);
 background:#020617;
 color:white;
 }
-
-.template-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-margin:30px 0 40px;
-}
-
-.template-item{
-padding:25px;
-border-radius:22px;
-}
-
-.panel{
-padding:35px;
-border-radius:28px;
-overflow:auto;
-}
-
-.search{
-margin-bottom:25px;
-font-family:'Orbitron',sans-serif;
-}
-
-.table{
-width:100%;
-border-collapse:collapse;
-min-width:850px;
-}
-
-.table th{
-background:rgba(30,41,59,0.9);
-padding:16px;
-text-align:left;
-}
-
-.table td{
-padding:16px;
-border-bottom:1px solid rgba(255,255,255,0.06);
-}
-
-.actions{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-}
-
-.actions button{
-padding:10px 14px;
-border:none;
-border-radius:12px;
-color:white;
-font-weight:700;
-cursor:pointer;
-font-family:'Orbitron',sans-serif;
-}
-
-.epi{background:#2563eb;}
-.ref{background:#16a34a;}
-.tras{background:#9333ea;}
-
-.notice{
-margin-top:20px;
-padding:22px;
-background:rgba(37,99,235,0.12);
-border:1px solid rgba(147,197,253,0.25);
-color:#dbeafe;
-border-radius:16px;
-line-height:1.8;
-}
-
-.status{
-margin-top:12px;
-font-weight:600;
-font-size:.95rem;
-}
-
-.success{color:#4ade80;}
-.error{color:#f87171;}
-.warning{color:#facc15;}
-
-footer{
-margin-top:90px;
-padding:70px 8%;
-background:linear-gradient(135deg,#020617,#0f172a,#111827);
-}
-
-.footer-brand{
-font-family:'Orbitron',sans-serif;
-font-size:3rem;
-font-weight:900;
-letter-spacing:8px;
-background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-margin-bottom:20px;
-}
-
-@media(max-width:900px){
-.hero{grid-template-columns:1fr;}
-.hero h1{font-size:2.8rem;}
-}
+.table{width:100%;border-collapse:collapse;margin-top:20px}
+.table th,.table td{padding:16px;text-align:left}
+.table th{background:rgba(30,41,59,.8);font-family:'Orbitron',sans-serif}
+.table td{border-bottom:1px solid rgba(255,255,255,.06)}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.actions button{padding:10px 14px;border:none;border-radius:12px;color:white;font-weight:700;font-family:'Orbitron',sans-serif;cursor:pointer}
+.epi{background:#2563eb}.ref{background:#16a34a}.tras{background:#9333ea}
+.status{margin-top:12px;font-weight:700}.success{color:#4ade80}.error{color:#f87171}.warning{color:#facc15}
+footer{padding:60px 8%;margin-top:60px}
+.footer-brand{font-family:'Orbitron',sans-serif;font-size:2.5rem;letter-spacing:8px;background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.hero h1{font-size:2.8rem}}
 </style>
 </head>
 <body>
-
 <nav>
 <div class="logo">RENIS</div>
 </nav>
@@ -232,67 +73,37 @@ margin-bottom:20px;
 <section class="hero">
 <div>
 <h1>Sistema <span>RENIS</span></h1>
-<p>
-Plataforma hospitalaria renal con sincronización inteligente y automatización documental.
-</p>
-
-<button class="btn" onclick="window.open('https://forms.gle/pAb2KBwuUJjMxMwP6')">
-Abrir Formulario
-</button>
-
-<div class="notice">
-RENIS utiliza Google Sheets como base de datos clínica dinámica.
+<p>Plataforma hospitalaria renal con automatización documental avanzada.</p>
+<button class="btn" onclick="window.open('https://forms.gle/pAb2KBwuUJjMxMwP6')">Abrir Formulario</button>
 </div>
-</div>
-
 <div class="card">
-<img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://forms.gle/pAb2KBwuUJjMxMwP6" style="width:100%;border-radius:20px;" alt="QR">
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://forms.gle/pAb2KBwuUJjMxMwP6" style="width:100%;border-radius:20px" alt="QR">
 </div>
 </section>
 
 <section class="section">
-
 <div class="config-box">
 <h2 class="section-title">Conexión Google Sheets</h2>
-
 <input type="text" id="sheetUrlInput" placeholder="https://opensheet.elk.sh/TU_ID/Hoja1">
-
-<button class="btn" style="margin-top:20px;" onclick="guardarSheetURL()">
-Guardar Conexión
-</button>
-
-<div id="sheetStatus" class="status warning">
-Modo demo local activo.
-</div>
+<button class="btn" onclick="guardarSheetURL()">Guardar Conexión</button>
+<div id="sheetStatus" class="status warning">Modo demo local activo.</div>
 </div>
 
-<h2 class="section-title" style="margin-bottom:20px;">
-Plantillas Oficiales
-</h2>
-
-<div class="template-grid">
-<div class="template-item">
-<h3>Epicrisis</h3>
-<input type="file" id="epicrisisFile" accept=".docx">
+<div class="notice">
+<h2 class="section-title">Plantillas oficiales</h2>
+<p>RENIS cargará automáticamente las plantillas desde GitHub.</p>
+<ul style="margin-top:15px;padding-left:20px;line-height:2">
+<li>templates/epicrisis 2.0.docx</li>
+<li>templates/referencia 2.0.docx</li>
+<li>templates/traslado 2.0.docx</li>
+</ul>
 <div id="epicrisisStatus" class="status"></div>
-</div>
-
-<div class="template-item">
-<h3>Referencia</h3>
-<input type="file" id="referenciaFile" accept=".docx">
 <div id="referenciaStatus" class="status"></div>
-</div>
-
-<div class="template-item">
-<h3>Traslado</h3>
-<input type="file" id="trasladoFile" accept=".docx">
 <div id="trasladoStatus" class="status"></div>
-</div>
 </div>
 
 <div class="panel">
-<input id="busqueda" class="search" placeholder="Buscar paciente">
-
+<input id="busqueda" placeholder="Buscar paciente">
 <table class="table" id="tabla">
 <thead>
 <tr>
@@ -306,98 +117,80 @@ Plantillas Oficiales
 <tbody></tbody>
 </table>
 </div>
-
 </section>
 
 <footer>
 <div class="footer-brand">RENIS</div>
-<p style="line-height:2;color:#cbd5e1;max-width:700px;">
-Plataforma concebida y desarrollada por <strong style="color:#93c5fd;">Dr. Luis Ernesto Guardado</strong>
-</p>
+<p>Plataforma desarrollada por <strong style="color:#93c5fd">Dr. Luis Ernesto Guardado</strong></p>
 </footer>
 
 <script>
 function loadScript(src){
 return new Promise((resolve,reject)=>{
-const script = document.createElement('script');
-script.src = src;
-script.onload = resolve;
-script.onerror = reject;
+const script=document.createElement('script');
+script.src=src;
+script.onload=resolve;
+script.onerror=()=>reject(new Error('No se pudo cargar '+src));
 document.head.appendChild(script);
 });
 }
 
 async function cargarLibrerias(){
 await loadScript('https://cdn.jsdelivr.net/npm/pizzip@3.1.4/dist/pizzip.min.js');
-await loadScript('https://cdn.jsdelivr.net/npm/docxtemplater@3.37.9/build/docxtemplater.js');
+await loadScript('https://cdn.jsdelivr.net/npm/docxtemplater@3.63.0/build/docxtemplater.js');
 await loadScript('https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js');
 }
 
-const templates = {
-Epicrisis:null,
-Referencia:null,
-Traslado:null
+const templates={Epicrisis:null,Referencia:null,Traslado:null};
+
+const TEMPLATE_URLS={
+Epicrisis:[
+'./templates/epicrisis%202.0.docx',
+'./templates/epicrisis.docx'
+],
+Referencia:[
+'./templates/referencia%202.0.docx',
+'./templates/referencia.docx'
+],
+Traslado:[
+'./templates/traslado%202.0.docx',
+'./templates/traslado.docx'
+]
 };
 
-let pacientes = {
-PACIENTE_1:{
-Nombre:'Juan',
-PrimerApellido:'Pérez',
-Edad:'54',
-Sexo:'Masculino',
-Expediente:'REN-001',
-Diagnostico:'ERC Estadio IV',
-Tratamiento:'Hemodiálisis'
-},
-PACIENTE_2:{
-Nombre:'María Fernanda',
-PrimerApellido:'López',
-Edad:'63',
-Sexo:'Femenino',
-Expediente:'REN-002',
-Diagnostico:'Hemodiálisis Crónica',
-Tratamiento:'Hemodiálisis'
-}
+let pacientes={
+PACIENTE_1:{Nombre:'Juan',PrimerApellido:'Pérez',Edad:'54',Sexo:'Masculino',Expediente:'REN-001',Diagnostico:'ERC Estadio IV',Tratamiento:'Hemodiálisis'},
+PACIENTE_2:{Nombre:'María Fernanda',PrimerApellido:'López',Edad:'63',Sexo:'Femenino',Expediente:'REN-002',Diagnostico:'Hemodiálisis Crónica',Tratamiento:'Hemodiálisis'}
 };
 
 function actualizarEstado(id,texto,clase){
-const el = document.getElementById(id);
-el.textContent = texto;
-el.className = 'status ' + clase;
+const el=document.getElementById(id);
+if(!el)return;
+el.textContent=texto;
+el.className='status '+clase;
 }
 
-function guardarLocal(key,value){
-localStorage.setItem(key,value);
-}
-
-function obtenerLocal(key){
-return localStorage.getItem(key);
-}
+function guardarLocal(key,value){localStorage.setItem(key,value)}
+function obtenerLocal(key){return localStorage.getItem(key)}
 
 async function guardarSheetURL(){
-const url = document.getElementById('sheetUrlInput').value.trim();
-
+const url=document.getElementById('sheetUrlInput').value.trim();
 if(!url.includes('opensheet.elk.sh')){
 actualizarEstado('sheetStatus','URL inválida','error');
 return;
 }
-
 guardarLocal('sheet_url',url);
 actualizarEstado('sheetStatus','Conexión guardada','success');
-
 await cargarPacientesDesdeSheets();
 }
 
 function renderizarPacientes(){
-const tbody = document.querySelector('#tabla tbody');
-tbody.innerHTML = '';
-
+const tbody=document.querySelector('#tabla tbody');
+tbody.innerHTML='';
 Object.keys(pacientes).forEach(key=>{
-const p = pacientes[key];
-
-const fila = document.createElement('tr');
-
-fila.innerHTML = `
+const p=pacientes[key];
+const fila=document.createElement('tr');
+fila.innerHTML=`
 <td>${p.Expediente}</td>
 <td>${p.Nombre} ${p.PrimerApellido}</td>
 <td>${p.Edad} años</td>
@@ -408,80 +201,84 @@ fila.innerHTML = `
 <button class="ref" onclick="generarDocumento('Referencia','${key}')">Referencia</button>
 <button class="tras" onclick="generarDocumento('Traslado','${key}')">Traslado</button>
 </div>
-</td>
-`;
-
+</td>`;
 tbody.appendChild(fila);
 });
 }
 
 async function cargarPacientesDesdeSheets(){
 try{
-const sheetURL = obtenerLocal('sheet_url');
-
-if(!sheetURL){
-renderizarPacientes();
-return;
-}
-
-const response = await fetch(sheetURL);
-
-if(!response.ok){
-throw new Error('No se pudo conectar con Google Sheets');
-}
-
-const datos = await response.json();
-
-if(!Array.isArray(datos) || datos.length === 0){
-throw new Error('Sin datos disponibles');
-}
-
-pacientes = {};
-
+const sheetURL=obtenerLocal('sheet_url');
+if(!sheetURL){renderizarPacientes();return;}
+const response=await fetch(sheetURL);
+if(!response.ok)throw new Error();
+const datos=await response.json();
+pacientes={};
 datos.forEach((p,index)=>{
-const key = 'PACIENTE_' + index;
-
-pacientes[key] = {
-Nombre:p.Nombre || '',
-PrimerApellido:p['Primer Apellido'] || '',
-Edad:p.Edad || '',
-Sexo:p.Sexo || '',
-Expediente:p.Expediente || '',
-Diagnostico:p.Diagnostico || '',
-Tratamiento:p.Tratamiento || ''
+pacientes['PACIENTE_'+index]={
+Nombre:p.Nombre||'',
+PrimerApellido:p['Primer Apellido']||'',
+Edad:p.Edad||'',
+Sexo:p.Sexo||'',
+Expediente:p.Expediente||'',
+Diagnostico:p.Diagnostico||'',
+Tratamiento:p.Tratamiento||''
 };
 });
-
 renderizarPacientes();
 actualizarEstado('sheetStatus','Google Sheets conectado','success');
-
 }catch(error){
-console.error(error);
-actualizarEstado('sheetStatus','Error conexión Sheets - usando demo','warning');
 renderizarPacientes();
+actualizarEstado('sheetStatus','Error conexión Sheets - usando demo','warning');
+}
+}
+
+async function intentarCargarPlantilla(url){
+const response=await fetch(url+'?v='+Date.now());
+if(!response.ok){
+throw new Error('Plantilla no encontrada');
+}
+const blob=await response.blob();
+if(blob.size===0){
+throw new Error('Archivo vacío');
+}
+return new File([blob],'template.docx',{
+type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+});
+}
+
+async function cargarPlantillasAutomaticas(){
+for(const tipo in TEMPLATE_URLS){
+let cargada=false;
+for(const ruta of TEMPLATE_URLS[tipo]){
+try{
+const file=await intentarCargarPlantilla(ruta);
+templates[tipo]=file;
+actualizarEstado(`${tipo.toLowerCase()}Status`,'Plantilla oficial cargada automáticamente','success');
+cargada=true;
+break;
+}catch(error){
+console.warn('Intento fallido:',ruta,error.message);
+}
+}
+if(!cargada){
+actualizarEstado(`${tipo.toLowerCase()}Status`,'No se encontró plantilla oficial','error');
+}
 }
 }
 
 async function generarDocumento(tipo,pacienteKey){
 try{
-const file = templates[tipo];
-
+const file=templates[tipo];
 if(!file){
-alert('Debes cargar plantilla ' + tipo);
+alert('Plantilla no disponible');
 return;
 }
-
-const paciente = pacientes[pacienteKey];
-
-const content = await file.arrayBuffer();
-const zip = new PizZip(content);
-const DocxtemplaterClass = window.docxtemplater || window.Docxtemplater;
-
-const doc = new DocxtemplaterClass(zip);
-
-doc.setOptions({
-delimiters:{start:'<<',end:'>>'}
-});
+const paciente=pacientes[pacienteKey];
+const content=await file.arrayBuffer();
+const zip=new PizZip(content);
+const DocxtemplaterClass=window.docxtemplater||window.Docxtemplater;
+const doc=new DocxtemplaterClass(zip,{delimiters:{start:'<<',end:'>>'}});
 
 doc.render({
 'Nombre':paciente.Nombre,
@@ -493,13 +290,12 @@ doc.render({
 'Tratamiento':paciente.Tratamiento
 });
 
-const blob = doc.getZip().generate({
+const blob=doc.getZip().generate({
 type:'blob',
 mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 });
 
 saveAs(blob,`${tipo}_${paciente.Expediente}.docx`);
-
 }catch(error){
 console.error(error);
 alert('Error generando documento');
@@ -508,32 +304,11 @@ alert('Error generando documento');
 
 function configurarEventos(){
 document.getElementById('busqueda').addEventListener('keyup',function(){
-const valor = this.value.toLowerCase();
-
-const filas = document.querySelectorAll('#tabla tbody tr');
-
+const valor=this.value.toLowerCase();
+const filas=document.querySelectorAll('#tabla tbody tr');
 filas.forEach(fila=>{
-const texto = fila.innerText.toLowerCase();
-fila.style.display = texto.includes(valor) ? '' : 'none';
-});
-});
-
-const inputs = [
-{id:'epicrisisFile',key:'Epicrisis',status:'epicrisisStatus'},
-{id:'referenciaFile',key:'Referencia',status:'referenciaStatus'},
-{id:'trasladoFile',key:'Traslado',status:'trasladoStatus'}
-];
-
-inputs.forEach(item=>{
-document.getElementById(item.id).addEventListener('change',e=>{
-const file = e.target.files[0];
-
-if(!file){
-return;
-}
-
-templates[item.key] = file;
-actualizarEstado(item.status,'Plantilla cargada','success');
+const texto=fila.innerText.toLowerCase();
+fila.style.display=texto.includes(valor)?'':'none';
 });
 });
 }
@@ -542,13 +317,11 @@ async function iniciarSistema(){
 await cargarLibrerias();
 configurarEventos();
 await cargarPacientesDesdeSheets();
-
-console.assert(typeof generarDocumento === 'function','generarDocumento debe existir');
-console.assert(document.querySelectorAll('.actions button').length >= 3,'Botones no encontrados');
+await cargarPlantillasAutomaticas();
+console.assert(Object.keys(TEMPLATE_URLS).length===3,'Plantillas requeridas');
 }
 
 iniciarSistema();
 </script>
-
 </body>
 </html>
