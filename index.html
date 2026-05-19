@@ -73,7 +73,7 @@ footer{padding:60px 8%;margin-top:60px}
 <section class="hero">
 <div>
 <h1>Sistema <span>RENIS</span></h1>
-<p>Plataforma hospitalaria renal con automatización documental avanzada.</p>
+<p>Plataforma hospitalaria renal con sincronización clínica en tiempo real, visualización de documentos oficiales y trazabilidad hospitalaria avanzada.</p>
 <button class="btn" onclick="window.open('https://forms.gle/pAb2KBwuUJjMxMwP6')">Abrir Formulario</button>
 </div>
 <div class="card">
@@ -111,7 +111,9 @@ footer{padding:60px 8%;margin-top:60px}
 <th>Paciente</th>
 <th>Edad</th>
 <th>Diagnóstico</th>
-<th>Documentos</th>
+<th>Fecha</th>
+<th>Hora</th>
+<th>Documentos Oficiales</th>
 </tr>
 </thead>
 <tbody></tbody>
@@ -192,14 +194,16 @@ const p=pacientes[key];
 const fila=document.createElement('tr');
 fila.innerHTML=`
 <td>${p.Expediente}</td>
-<td>${p.Nombre} ${p.PrimerApellido}</td>
-<td>${p.Edad} años</td>
+<td><strong>${p.Nombre}</strong></td>
+<td>${p.Edad}</td>
 <td>${p.Diagnostico}</td>
+<td>${p.FechaRegistro || '--'}</td>
+<td>${p.HoraRegistro || '--'}</td>
 <td>
 <div class="actions">
-<button class="epi" onclick="generarDocumento('Epicrisis','${key}')">Epicrisis</button>
-<button class="ref" onclick="generarDocumento('Referencia','${key}')">Referencia</button>
-<button class="tras" onclick="generarDocumento('Traslado','${key}')">Traslado</button>
+<button class="epi" onclick="abrirPDF('${p.EpicrisisPDF || ''}')">Epicrisis</button>
+<button class="ref" onclick="abrirPDF('${p.ReferenciaPDF || ''}')">Referencia</button>
+<button class="tras" onclick="abrirPDF('${p.TrasladoPDF || ''}')">Traslado</button>
 </div>
 </td>`;
 tbody.appendChild(fila);
@@ -213,93 +217,56 @@ if(!sheetURL){renderizarPacientes();return;}
 const response=await fetch(sheetURL);
 if(!response.ok)throw new Error();
 const datos=await response.json();
+
+if(!Array.isArray(datos) || datos.length===0){
+throw new Error('Sin datos');
+}
+
 pacientes={};
+
 datos.forEach((p,index)=>{
+console.log('Paciente Sheets:',p);
+
+const nombre=(p['NOMBRE ']||p.Nombre||p.nombre||p.NOMBRE||p['Nombre completo']||p['NOMBRE COMPLETO']||p.PACIENTE||'').toString().trim();
+const apellido=((p['PRIMER APELLIDO ']||'')+' '+(p['SEGUNDO PELLIDO ']||'')).toString().trim();
+
+const nombreCompleto=(nombre+' '+apellido).trim();
+
 pacientes['PACIENTE_'+index]={
-Nombre:p.Nombre||'',
-PrimerApellido:p['Primer Apellido']||'',
-Edad:p.Edad||'',
-Sexo:p.Sexo||'',
-Expediente:p.Expediente||'',
-Diagnostico:p.Diagnostico||'',
-Tratamiento:p.Tratamiento||''
+Nombre:nombreCompleto || 'Paciente sin nombre',
+PrimerApellido:apellido,
+Edad:p['EDAD']||p.Edad||p.edad||'--',
+Sexo:p['SEXO']||p.Sexo||p.sexo||'',
+Expediente:p['NUMERO DE IDENTIDAD ']||p['Número de identidad']||p['Numero de identidad']||p.Identidad||p.identidad||p.Expediente||p.expediente||p.EXPEDIENTE||('ID-'+(index+1)),
+Diagnostico:p['1. DIAGNOSTICO ']||p['2. DIAGNOSTICO']||p.Diagnostico||p.diagnostico||p.DIAGNOSTICO||'No especificado',
+Tratamiento:p.Tratamiento||p.tratamiento||p.TRATAMIENTO||'',
+EpicrisisPDF:p['Merged Doc URL - epicrisis 2.0']||p.EpicrisisPDF||p.epicrisispdf||p['Epicrisis PDF']||'',
+ReferenciaPDF:p['Merged Doc URL - referencias 2.0']||p.ReferenciaPDF||p.referenciapdf||p['Referencia PDF']||'',
+TrasladoPDF:p['Merged Doc URL - traslado 2.0']||p.TrasladoPDF||p.trasladopdf||p['Traslado PDF']||'',
+FechaRegistro:p['FECHA DE INGRESO']||p.Timestamp||p.Fecha||p.fecha||p['Fecha de registro']||new Date().toLocaleDateString(),
+HoraRegistro:p['HORA DE INGRESO HOSPITALARIO']||p.Hora||p.hora||p['Hora de registro']||new Date().toLocaleTimeString()
 };
 });
+
 renderizarPacientes();
-actualizarEstado('sheetStatus','Google Sheets conectado','success');
+actualizarEstado('sheetStatus','Google Sheets conectado correctamente','success');
 }catch(error){
+console.error('ERROR GOOGLE SHEETS:',error);
 renderizarPacientes();
 actualizarEstado('sheetStatus','Error conexión Sheets - usando demo','warning');
 }
 }
 
-async function intentarCargarPlantilla(url){
-const response=await fetch(url+'?v='+Date.now());
-if(!response.ok){
-throw new Error('Plantilla no encontrada');
+function abrirPDF(url){
+if(url.includes('drive.google.com')){
+url=url.replace('/view?usp=drivesdk','/preview');
+url=url.replace('/view','/preview');
 }
-const blob=await response.blob();
-if(blob.size===0){
-throw new Error('Archivo vacío');
-}
-return new File([blob],'template.docx',{
-type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-});
-}
-
-async function cargarPlantillasAutomaticas(){
-for(const tipo in TEMPLATE_URLS){
-let cargada=false;
-for(const ruta of TEMPLATE_URLS[tipo]){
-try{
-const file=await intentarCargarPlantilla(ruta);
-templates[tipo]=file;
-actualizarEstado(`${tipo.toLowerCase()}Status`,'Plantilla oficial cargada automáticamente','success');
-cargada=true;
-break;
-}catch(error){
-console.warn('Intento fallido:',ruta,error.message);
-}
-}
-if(!cargada){
-actualizarEstado(`${tipo.toLowerCase()}Status`,'No se encontró plantilla oficial','error');
-}
-}
-}
-
-async function generarDocumento(tipo,pacienteKey){
-try{
-const file=templates[tipo];
-if(!file){
-alert('Plantilla no disponible');
+if(!url || url.trim()===''){
+alert('Documento PDF aún no generado por Autocrat');
 return;
 }
-const paciente=pacientes[pacienteKey];
-const content=await file.arrayBuffer();
-const zip=new PizZip(content);
-const DocxtemplaterClass=window.docxtemplater||window.Docxtemplater;
-const doc=new DocxtemplaterClass(zip,{delimiters:{start:'<<',end:'>>'}});
-
-doc.render({
-'Nombre':paciente.Nombre,
-'Primer Apellido':paciente.PrimerApellido,
-'Edad':paciente.Edad,
-'Sexo':paciente.Sexo,
-'Expediente':paciente.Expediente,
-'Diagnósticos de Ingreso':paciente.Diagnostico,
-'Tratamiento':paciente.Tratamiento
-});
-
-const blob=doc.getZip().generate({
-type:'blob',
-mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-});
-
-saveAs(blob,`${tipo}_${paciente.Expediente}.docx`);
-}catch(error){
-console.error(error);
-alert('Error generando documento');
-}
+window.open(url,'_blank');
 }
 
 function configurarEventos(){
@@ -317,8 +284,9 @@ async function iniciarSistema(){
 await cargarLibrerias();
 configurarEventos();
 await cargarPacientesDesdeSheets();
-await cargarPlantillasAutomaticas();
-console.assert(Object.keys(TEMPLATE_URLS).length===3,'Plantillas requeridas');
+
+
+console.assert(Object.keys(pacientes).length>0,'Pacientes requeridos');
 }
 
 iniciarSistema();
