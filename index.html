@@ -29,9 +29,9 @@ background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);
 .hero h1{font-family:'Orbitron',sans-serif;font-size:4rem;margin-bottom:20px}
 .hero h1 span{background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .hero p{line-height:1.8;color:#cbd5e1}
-.card,.panel,.config-box,.notice{background:rgba(15,23,42,.75);border:1px solid rgba(255,255,255,.08);border-radius:24px;backdrop-filter:blur(16px)}
-.card,.config-box,.panel,.notice{padding:30px}
-.notice,.config-box,.panel{margin-bottom:30px}
+.card,.panel,.config-box{background:rgba(15,23,42,.75);border:1px solid rgba(255,255,255,.08);border-radius:24px;backdrop-filter:blur(16px)}
+.card,.config-box,.panel{padding:30px}
+.panel,.config-box{margin-bottom:30px}
 .btn{
 padding:16px 28px;
 border:none;
@@ -59,7 +59,22 @@ color:white;
 .actions{display:flex;gap:10px;flex-wrap:wrap}
 .actions button{padding:10px 14px;border:none;border-radius:12px;color:white;font-weight:700;font-family:'Orbitron',sans-serif;cursor:pointer}
 .epi{background:#2563eb}.ref{background:#16a34a}.tras{background:#9333ea}
-.status{margin-top:12px;font-weight:700}.success{color:#4ade80}.error{color:#f87171}.warning{color:#facc15}
+.status{margin-top:12px;font-weight:700;display:flex;align-items:center;gap:10px}
+.connection-indicator{
+width:14px;
+height:14px;
+border-radius:50%;
+background:#facc15;
+box-shadow:0 0 15px #facc15;
+animation:pulse 2s infinite;
+}
+.connection-online{background:#22c55e;box-shadow:0 0 18px #22c55e}
+.connection-offline{background:#ef4444;box-shadow:0 0 18px #ef4444}
+@keyframes pulse{
+0%{transform:scale(1);opacity:1}
+50%{transform:scale(1.2);opacity:.7}
+100%{transform:scale(1);opacity:1}
+}
 footer{padding:60px 8%;margin-top:60px}
 .footer-brand{font-family:'Orbitron',sans-serif;font-size:2.5rem;letter-spacing:8px;background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px}
 @media(max-width:900px){.hero{grid-template-columns:1fr}.hero h1{font-size:2.8rem}}
@@ -73,7 +88,7 @@ footer{padding:60px 8%;margin-top:60px}
 <section class="hero">
 <div>
 <h1>Sistema <span>RENIS</span></h1>
-<p>Plataforma hospitalaria renal con sincronización clínica en tiempo real, visualización de documentos oficiales y trazabilidad hospitalaria avanzada.</p>
+<p>Plataforma hospitalaria renal con sincronización clínica en tiempo real.</p>
 <button class="btn" onclick="window.open('https://forms.gle/pAb2KBwuUJjMxMwP6')">Abrir Formulario</button>
 </div>
 <div class="card">
@@ -83,23 +98,11 @@ footer{padding:60px 8%;margin-top:60px}
 
 <section class="section">
 <div class="config-box">
-<h2 class="section-title">Conexión Google Sheets</h2>
-<input type="text" id="sheetUrlInput" placeholder="https://opensheet.elk.sh/TU_ID/Hoja1">
-<button class="btn" onclick="guardarSheetURL()">Guardar Conexión</button>
-<div id="sheetStatus" class="status warning">Modo demo local activo.</div>
+<h2 class="section-title">Estado del Sistema</h2>
+<div id="sheetStatus" class="status">
+<div id="connectionLight" class="connection-indicator"></div>
+<span id="connectionText">Conectando con Google Sheets...</span>
 </div>
-
-<div class="notice">
-<h2 class="section-title">Plantillas oficiales</h2>
-<p>RENIS cargará automáticamente las plantillas desde GitHub.</p>
-<ul style="margin-top:15px;padding-left:20px;line-height:2">
-<li>templates/epicrisis 2.0.docx</li>
-<li>templates/referencia 2.0.docx</li>
-<li>templates/traslado 2.0.docx</li>
-</ul>
-<div id="epicrisisStatus" class="status"></div>
-<div id="referenciaStatus" class="status"></div>
-<div id="trasladoStatus" class="status"></div>
 </div>
 
 <div class="panel">
@@ -107,13 +110,14 @@ footer{padding:60px 8%;margin-top:60px}
 <table class="table" id="tabla">
 <thead>
 <tr>
-<th>Expediente</th>
+<th>Identidad</th>
 <th>Paciente</th>
 <th>Edad</th>
 <th>Diagnóstico</th>
 <th>Fecha</th>
 <th>Hora</th>
-<th>Documentos Oficiales</th>
+<th>Documentos</th>
+<th>Identidad</th>
 </tr>
 </thead>
 <tbody></tbody>
@@ -127,152 +131,120 @@ footer{padding:60px 8%;margin-top:60px}
 </footer>
 
 <script>
-function loadScript(src){
-return new Promise((resolve,reject)=>{
-const script=document.createElement('script');
-script.src=src;
-script.onload=resolve;
-script.onerror=()=>reject(new Error('No se pudo cargar '+src));
-document.head.appendChild(script);
-});
+const OPENSHEET_URL='https://opensheet.elk.sh/1cS2KN-prJmVvPxB4Tm5JrpxS_noDY4Nyj6KUZ73KE10/Respuestas%20de%20formulario%202';
+
+let pacientes={};
+
+function actualizarConexion(online,texto){
+const status=document.getElementById('sheetStatus');
+const light=document.getElementById('connectionLight');
+const text=document.getElementById('connectionText');
+
+text.textContent=texto;
+
+if(online){
+status.style.color='#4ade80';
+light.className='connection-indicator connection-online';
+}else{
+status.style.color='#ef4444';
+light.className='connection-indicator connection-offline';
+}
 }
 
-async function cargarLibrerias(){
-await loadScript('https://cdn.jsdelivr.net/npm/pizzip@3.1.4/dist/pizzip.min.js');
-await loadScript('https://cdn.jsdelivr.net/npm/docxtemplater@3.63.0/build/docxtemplater.js');
-await loadScript('https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js');
-}
-
-const templates={Epicrisis:null,Referencia:null,Traslado:null};
-
-const TEMPLATE_URLS={
-Epicrisis:[
-'./templates/epicrisis%202.0.docx',
-'./templates/epicrisis.docx'
-],
-Referencia:[
-'./templates/referencia%202.0.docx',
-'./templates/referencia.docx'
-],
-Traslado:[
-'./templates/traslado%202.0.docx',
-'./templates/traslado.docx'
-]
-};
-
-let pacientes={
-PACIENTE_1:{Nombre:'Juan',PrimerApellido:'Pérez',Edad:'54',Sexo:'Masculino',Expediente:'REN-001',Diagnostico:'ERC Estadio IV',Tratamiento:'Hemodiálisis'},
-PACIENTE_2:{Nombre:'María Fernanda',PrimerApellido:'López',Edad:'63',Sexo:'Femenino',Expediente:'REN-002',Diagnostico:'Hemodiálisis Crónica',Tratamiento:'Hemodiálisis'}
-};
-
-function actualizarEstado(id,texto,clase){
-const el=document.getElementById(id);
-if(!el)return;
-el.textContent=texto;
-el.className='status '+clase;
-}
-
-function guardarLocal(key,value){localStorage.setItem(key,value)}
-function obtenerLocal(key){return localStorage.getItem(key)}
-
-async function guardarSheetURL(){
-const url=document.getElementById('sheetUrlInput').value.trim();
-if(!url.includes('opensheet.elk.sh')){
-actualizarEstado('sheetStatus','URL inválida','error');
+function abrirDocumento(url){
+if(!url || url.trim()===''){
+alert('Documento aún no generado por Autocrat');
 return;
 }
-guardarLocal('sheet_url',url);
-actualizarEstado('sheetStatus','Conexión guardada','success');
-await cargarPacientesDesdeSheets();
+
+let cleanUrl=url.trim();
+
+if(cleanUrl.includes('drive.google.com')){
+cleanUrl=cleanUrl
+.replace('/edit?usp=drivesdk','/view')
+.replace('/edit','/view');
+}
+
+console.log('Abriendo documento:',cleanUrl);
+window.open(cleanUrl,'_blank');
 }
 
 function renderizarPacientes(){
 const tbody=document.querySelector('#tabla tbody');
 tbody.innerHTML='';
+
 Object.keys(pacientes).forEach(key=>{
 const p=pacientes[key];
+
 const fila=document.createElement('tr');
 fila.innerHTML=`
 <td>${p.Expediente}</td>
 <td><strong>${p.Nombre}</strong></td>
 <td>${p.Edad}</td>
 <td>${p.Diagnostico}</td>
-<td>${p.FechaRegistro || '--'}</td>
-<td>${p.HoraRegistro || '--'}</td>
+<td>${p.FechaRegistro}</td>
+<td>${p.HoraRegistro}</td>
 <td>
 <div class="actions">
-<button class="epi" onclick="abrirPDF('${p.EpicrisisPDF || ''}')">Epicrisis</button>
-<button class="ref" onclick="abrirPDF('${p.ReferenciaPDF || ''}')">Referencia</button>
-<button class="tras" onclick="abrirPDF('${p.TrasladoPDF || ''}')">Traslado</button>
+<button class="epi" onclick="abrirDocumento('${p.EpicrisisDOCX}')">Epicrisis</button>
+<button class="ref" onclick="abrirDocumento('${p.ReferenciaDOCX}')">Referencia</button>
+<button class="tras" onclick="abrirDocumento('${p.TrasladoDOCX}')">Traslado</button>
+<button style="background:#f59e0b" onclick="abrirDocumento('${p.FotoIdentidad}')">Identidad</button>
 </div>
+</td>
+<td>
+<button style="background:#0ea5e9;padding:10px 14px;border:none;border-radius:12px;color:white;font-weight:700;font-family:'Orbitron',sans-serif;cursor:pointer" onclick="abrirDocumento('${p.FotoIdentidad}')">Ver Foto</button>
 </td>`;
+
 tbody.appendChild(fila);
 });
 }
 
-async function cargarPacientesDesdeSheets(){
+async function cargarPacientes(){
 try{
-const sheetURL=obtenerLocal('sheet_url');
-if(!sheetURL){renderizarPacientes();return;}
-const response=await fetch(sheetURL);
-if(!response.ok)throw new Error();
-const datos=await response.json();
+const response=await fetch(OPENSHEET_URL);
 
-if(!Array.isArray(datos) || datos.length===0){
-throw new Error('Sin datos');
+if(!response.ok){
+throw new Error('No se pudo conectar');
 }
+
+const datos=await response.json();
 
 pacientes={};
 
-datos.forEach((p,index)=>{
-console.log('Paciente Sheets:',p);
-
-const nombre=(p['NOMBRE ']||p.Nombre||p.nombre||p.NOMBRE||p['Nombre completo']||p['NOMBRE COMPLETO']||p.PACIENTE||'').toString().trim();
-const apellido=((p['PRIMER APELLIDO ']||'')+' '+(p['SEGUNDO PELLIDO ']||'')).toString().trim();
-
-const nombreCompleto=(nombre+' '+apellido).trim();
+(datos || []).forEach((p,index)=>{
+const nombre=(p['NOMBRE ']||'').trim();
+const apellido1=(p['PRIMER APELLIDO ']||'').trim();
+const apellido2=(p['SEGUNDO PELLIDO ']||'').trim();
 
 pacientes['PACIENTE_'+index]={
-Nombre:nombreCompleto || 'Paciente sin nombre',
-PrimerApellido:apellido,
-Edad:p['EDAD']||p.Edad||p.edad||'--',
-Sexo:p['SEXO']||p.Sexo||p.sexo||'',
-Expediente:p['NUMERO DE IDENTIDAD ']||p['Número de identidad']||p['Numero de identidad']||p.Identidad||p.identidad||p.Expediente||p.expediente||p.EXPEDIENTE||('ID-'+(index+1)),
-Diagnostico:p['1. DIAGNOSTICO ']||p['2. DIAGNOSTICO']||p.Diagnostico||p.diagnostico||p.DIAGNOSTICO||'No especificado',
-Tratamiento:p.Tratamiento||p.tratamiento||p.TRATAMIENTO||'',
-EpicrisisPDF:p['Merged Doc URL - epicrisis 2.0']||p.EpicrisisPDF||p.epicrisispdf||p['Epicrisis PDF']||'',
-ReferenciaPDF:p['Merged Doc URL - referencias 2.0']||p.ReferenciaPDF||p.referenciapdf||p['Referencia PDF']||'',
-TrasladoPDF:p['Merged Doc URL - traslado 2.0']||p.TrasladoPDF||p.trasladopdf||p['Traslado PDF']||'',
-FechaRegistro:p['FECHA DE INGRESO']||p.Timestamp||p.Fecha||p.fecha||p['Fecha de registro']||new Date().toLocaleDateString(),
-HoraRegistro:p['HORA DE INGRESO HOSPITALARIO']||p.Hora||p.hora||p['Hora de registro']||new Date().toLocaleTimeString()
+Nombre:`${nombre} ${apellido1} ${apellido2}`.trim(),
+Expediente:p['NUMERO DE IDENTIDAD '] || 'SIN IDENTIDAD',
+Edad:p['EDAD'] || '--',
+Diagnostico:p['1. DIAGNOSTICO '] || p['2. DIAGNOSTICO'] || 'No especificado',
+FechaRegistro:p['FECHA DE INGRESO'] || '--',
+HoraRegistro:p['HORA DE INGRESO HOSPITALARIO'] || '--',
+EpicrisisDOCX:p['Link to merged Doc - epicrisis 2.0'] || p['Merged Doc URL - epicrisis 2.0'] || '',
+ReferenciaDOCX:p['Link to merged Doc - referencias 2.0'] || p['Merged Doc URL - referencias 2.0'] || '',
+TrasladoDOCX:p['Link to merged Doc - traslado 2.0'] || p['Merged Doc URL - traslado 2.0'] || '',
+FotoIdentidad:p['FOTO DE LA IDENTIDAD '] || p['FOTO DE LA IDENTIDAD1'] || ''
 };
 });
 
 renderizarPacientes();
-actualizarEstado('sheetStatus','Google Sheets conectado correctamente','success');
+actualizarConexion(true,'RENIS conectado en tiempo real con Google Sheets');
+
 }catch(error){
-console.error('ERROR GOOGLE SHEETS:',error);
-renderizarPacientes();
-actualizarEstado('sheetStatus','Error conexión Sheets - usando demo','warning');
+console.error(error);
+actualizarConexion(false,'RENIS fuera de línea');
 }
 }
 
-function abrirPDF(url){
-if(url.includes('drive.google.com')){
-url=url.replace('/view?usp=drivesdk','/preview');
-url=url.replace('/view','/preview');
-}
-if(!url || url.trim()===''){
-alert('Documento PDF aún no generado por Autocrat');
-return;
-}
-window.open(url,'_blank');
-}
-
-function configurarEventos(){
+function configurarBusqueda(){
 document.getElementById('busqueda').addEventListener('keyup',function(){
 const valor=this.value.toLowerCase();
 const filas=document.querySelectorAll('#tabla tbody tr');
+
 filas.forEach(fila=>{
 const texto=fila.innerText.toLowerCase();
 fila.style.display=texto.includes(valor)?'':'none';
@@ -281,12 +253,9 @@ fila.style.display=texto.includes(valor)?'':'none';
 }
 
 async function iniciarSistema(){
-await cargarLibrerias();
-configurarEventos();
-await cargarPacientesDesdeSheets();
-
-
-console.assert(Object.keys(pacientes).length>0,'Pacientes requeridos');
+configurarBusqueda();
+await cargarPacientes();
+console.assert(OPENSHEET_URL.includes('opensheet'),'OpenSheet requerido');
 }
 
 iniciarSistema();
