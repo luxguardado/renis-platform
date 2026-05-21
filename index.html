@@ -68,12 +68,20 @@ input,select{width:100%;padding:14px;border-radius:14px;border:1px solid rgba(25
 </div>
 
 <div id="sistemaRENIS" style="display:none;">
-<nav><div class="logo">RENIS</div></nav>
+<nav style="display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;">
+<div class="logo">RENIS</div>
+<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+<button id="estadisticasBtn" class="btn" style="display:none;background:linear-gradient(135deg,#0f766e,#14b8a6);" onclick="toggleEstadisticas()">Estadísticas</button>
+<button class="btn" style="background:linear-gradient(135deg,#dc2626,#ef4444);" onclick="cerrarSesion()">Cerrar Sesión</button>
+</div>
+</nav>
 
 <section class="section hero">
 <div>
 <h1>Sistema <span>RENIS</span></h1>
-<p style="line-height:1.8;color:#cbd5e1;margin-bottom:20px;">Plataforma renal digital conectada en tiempo real con Google Sheets y Autocrat.</p>
+<p style="line-height:2;color:#cbd5e1;margin-bottom:24px;font-size:1.05rem;max-width:720px;">
+Arquitectura clínica inteligente concebida para redefinir la nefrología hospitalaria mediante automatización avanzada, monitoreo digital en tiempo real y visualización médica de alta precisión. Una plataforma creada con visión disruptiva, pensamiento estratégico y una comprensión excepcional de la gestión clínica moderna.
+</p>
 <button class="btn" onclick="window.open('https://forms.gle/pAb2KBwuUJjMxMwP6')">Abrir Formulario</button>
 </div>
 <div class="card">
@@ -82,6 +90,38 @@ input,select{width:100%;padding:14px;border-radius:14px;border:1px solid rgba(25
 </section>
 
 <section class="section">
+<div id="estadisticasPanel" class="panel" style="display:none;margin-bottom:20px;">
+<h2 style="font-family:'Orbitron',sans-serif;color:#7dd3fc;margin-bottom:20px;">Centro Estadístico RENIS</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;">
+<div class="card">
+<h3 style="color:#38bdf8;margin-bottom:10px;">Pacientes Registrados</h3>
+<h1 id="statPacientes" style="font-family:'Orbitron',sans-serif;font-size:2.5rem;">0</h1>
+</div>
+<div class="card">
+<h3 style="color:#4ade80;margin-bottom:10px;">Pacientes Masculinos</h3>
+<h1 id="statMasculino" style="font-family:'Orbitron',sans-serif;font-size:2.5rem;">0</h1>
+</div>
+<div class="card">
+<h3 style="color:#f472b6;margin-bottom:10px;">Pacientes Femeninos</h3>
+<h1 id="statFemenino" style="font-family:'Orbitron',sans-serif;font-size:2.5rem;">0</h1>
+</div>
+</div>
+
+<div style="margin-top:30px;background:rgba(2,6,23,.7);padding:20px;border-radius:20px;">
+<h3 style="margin-bottom:18px;color:#7dd3fc;font-family:'Orbitron',sans-serif;">Distribución RENIS</h3>
+<div style="display:flex;align-items:flex-end;gap:18px;height:240px;">
+<div style="flex:1;text-align:center;">
+<div id="graficoMasculino" style="background:linear-gradient(180deg,#38bdf8,#2563eb);height:120px;border-radius:18px 18px 0 0;"></div>
+<p style="margin-top:10px;color:#cbd5e1;">Masculino</p>
+</div>
+<div style="flex:1;text-align:center;">
+<div id="graficoFemenino" style="background:linear-gradient(180deg,#f472b6,#db2777);height:90px;border-radius:18px 18px 0 0;"></div>
+<p style="margin-top:10px;color:#cbd5e1;">Femenino</p>
+</div>
+</div>
+</div>
+</div>
+
 <div class="panel" style="margin-bottom:20px;">
 <div class="status">
 <div id="connectionLight" class="connection-indicator"></div>
@@ -136,6 +176,31 @@ input,select{width:100%;padding:14px;border-radius:14px;border:1px solid rgba(25
 </div>
 </section>
 
+<section class="section">
+<div class="panel">
+<h2 style="font-family:'Orbitron',sans-serif;color:#7dd3fc;margin-bottom:20px;">RENIS | Visión y Misión</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;">
+<div class="card">
+<h3 style="margin-bottom:15px;color:#38bdf8;">Visión</h3>
+<p style="line-height:1.9;color:#cbd5e1;">Transformar la atención nefrológica mediante innovación digital clínica, integración documental inteligente y monitoreo hospitalario en tiempo real.</p>
+</div>
+<div class="card">
+<h3 style="margin-bottom:15px;color:#818cf8;">Misión</h3>
+<p style="line-height:1.9;color:#cbd5e1;">Optimizar la gestión de pacientes renales con herramientas tecnológicas modernas, accesibles y seguras desarrolladas para el entorno hospitalario.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="panel">
+<h2 style="font-family:'Orbitron',sans-serif;color:#7dd3fc;margin-bottom:20px;">Enfermedad Renal Crónica</h2>
+<p style="line-height:2;color:#cbd5e1;">
+La enfermedad renal crónica es una condición progresiva donde los riñones pierden gradualmente su capacidad para filtrar desechos y líquidos del organismo. Entre sus principales causas se encuentran la diabetes mellitus, hipertensión arterial, glomerulopatías y nefropatía mesoamericana. RENIS permite integrar información clínica, diagnóstica y documental para optimizar el seguimiento hospitalario de pacientes renales.
+</p>
+</div>
+</section>
+
 <footer class="section">
 <div class="footer-brand">RENIS</div>
 <p>Desarrollado por <strong style="color:#93c5fd;">Dr. Luis Ernesto Guardado</strong></p>
@@ -148,6 +213,7 @@ const SUPER_ADMIN='DrLuisGuardado';
 const SUPER_PASSWORD='hotwheels20.';
 
 let pacientes={};
+let estadisticas={masculino:0,femenino:0,total:0};
 
 function actualizarConexion(online,texto){
 const light=document.getElementById('connectionLight');
@@ -181,6 +247,46 @@ localStorage.setItem('renis_solicitudes',JSON.stringify(solicitudes));
 alert('Solicitud enviada');
 }
 
+function cerrarSesion(){
+localStorage.removeItem('renis_auth');
+localStorage.removeItem('renis_usuario');
+location.reload();
+}
+
+function toggleEstadisticas(){
+if(localStorage.getItem('renis_usuario')!==SUPER_ADMIN){
+alert('Acceso restringido');
+return;
+}
+
+const panel=document.getElementById('estadisticasPanel');
+
+if(panel.style.display==='none' || panel.style.display===''){
+panel.style.display='block';
+panel.scrollIntoView({behavior:'smooth'});
+}else{
+panel.style.display='none';
+}
+
+actualizarEstadisticas();
+}
+
+function actualizarEstadisticas(){
+if(!document.getElementById('statPacientes')) return;
+const total=estadisticas.total || 0;
+const masculino=estadisticas.masculino || 0;
+const femenino=estadisticas.femenino || 0;
+
+document.getElementById('statPacientes').textContent=total;
+document.getElementById('statMasculino').textContent=masculino;
+document.getElementById('statFemenino').textContent=femenino;
+
+const max=Math.max(masculino,femenino,1);
+
+document.getElementById('graficoMasculino').style.height=((masculino/max)*220)+'px';
+document.getElementById('graficoFemenino').style.height=((femenino/max)*220)+'px';
+}
+
 function iniciarSesion(){
 const usuario=document.getElementById('usuario').value.trim();
 const password=document.getElementById('password').value.trim();
@@ -191,6 +297,7 @@ localStorage.setItem('renis_usuario',usuario);
 document.getElementById('loginScreen').style.display='none';
 document.getElementById('sistemaRENIS').style.display='block';
 renderizarUsuariosRegistrados();
+document.getElementById('estadisticasBtn').style.display='inline-block';
 }else{
 document.getElementById('loginError').style.display='block';
 }
@@ -200,6 +307,10 @@ function verificarSesion(){
 if(localStorage.getItem('renis_auth')==='true'){
 document.getElementById('loginScreen').style.display='none';
 document.getElementById('sistemaRENIS').style.display='block';
+
+if(localStorage.getItem('renis_usuario')===SUPER_ADMIN){
+document.getElementById('estadisticasBtn').style.display='inline-block';
+}
 }
 }
 
@@ -341,7 +452,12 @@ return (p['NOMBRE '] || p['NUMERO DE IDENTIDAD '] || p['PRIMER APELLIDO ']);
 });
 document.getElementById('totalPacientes').textContent=pacientesValidos.length;
 
+estadisticas={masculino:0,femenino:0,total:pacientesValidos.length};
+
 pacientesValidos.forEach((p,index)=>{
+const sexo=(p['SEXO']||'').toLowerCase();
+if(sexo.includes('mas')) estadisticas.masculino++;
+if(sexo.includes('fem')) estadisticas.femenino++;
 const nombre=(p['NOMBRE ']||'').trim();
 const apellido1=(p['PRIMER APELLIDO ']||'').trim();
 const apellido2=(p['SEGUNDO PELLIDO ']||'').trim();
@@ -361,6 +477,7 @@ FotoIdentidad:p['FOTO DE LA IDENTIDAD '] || p['FOTO DE LA IDENTIDAD1'] || p['FOT
 });
 
 renderizarPacientes();
+actualizarEstadisticas();
 actualizarConexion(true,'RENIS conectado en tiempo real');
 }catch(error){
 console.error(error);
