@@ -238,31 +238,60 @@ renderizarUsuariosRegistrados();
 }
 
 function abrirDocumento(url){
-if(!url||String(url).trim()===''){
-alert('Documento aún no generado');
+if(!url){
+alert('Documento aún no generado por Autocrat');
 return;
 }
 
-let cleanUrl=String(url).trim();
-
 try{
-if(cleanUrl.includes('HYPERLINK')){
-const match=cleanUrl.match(/https?:\/\/[^\")\s]+/);
-if(match&&match[0]) cleanUrl=match[0];
+let cleanUrl = String(url).trim();
+console.log('URL ORIGINAL:', cleanUrl);
+
+if(cleanUrl === '' || cleanUrl === 'undefined' || cleanUrl === 'null'){
+alert('Documento no disponible');
+return;
 }
 
-if(!cleanUrl.startsWith('http')&&cleanUrl.length>20){
-cleanUrl='https://docs.google.com/document/d/'+cleanUrl+'/edit';
+cleanUrl = cleanUrl.replace(/^"|"$/g,'');
+cleanUrl = cleanUrl.replace(/^'=+/, '');
+
+if(cleanUrl.indexOf('HYPERLINK') !== -1){
+const match = cleanUrl.match(/https?:\/\/[^\s\",\)]+/i);
+if(match && match[0]){
+cleanUrl = match[0];
+}
 }
 
-if(cleanUrl.includes('/d/')){
-const id=cleanUrl.split('/d/')[1]?.split('/')[0];
-if(id) cleanUrl='https://docs.google.com/document/d/'+id+'/edit';
+if(cleanUrl.indexOf('docs.google.com') !== -1){
+cleanUrl = cleanUrl.replace('/view?usp=sharing','/edit');
+cleanUrl = cleanUrl.replace('/view?usp=drivesdk','/edit');
+cleanUrl = cleanUrl.replace('/view','/edit');
+window.open(cleanUrl,'_blank','noopener,noreferrer');
+return;
 }
 
-window.open(cleanUrl,'_blank');
+if(cleanUrl.indexOf('drive.google.com') !== -1){
+window.open(cleanUrl,'_blank','noopener,noreferrer');
+return;
+}
+
+if(cleanUrl.startsWith('http')){
+window.open(cleanUrl,'_blank','noopener,noreferrer');
+return;
+}
+
+if(cleanUrl.length > 25 && cleanUrl.indexOf(' ') === -1 && cleanUrl.indexOf('/') === -1){
+const generatedUrl = 'https://docs.google.com/document/d/' + cleanUrl + '/edit';
+console.log('URL GENERADA:', generatedUrl);
+window.open(generatedUrl,'_blank','noopener,noreferrer');
+return;
+}
+
+alert('Link inválido o documento no disponible');
+console.error('URL INVALIDA:', cleanUrl);
+
 }catch(error){
-console.error(error);
+console.error('ERROR DOCUMENTO:', error);
 alert('No se pudo abrir el documento');
 }
 }
@@ -274,6 +303,11 @@ tbody.innerHTML='';
 Object.keys(pacientes).forEach(key=>{
 const p=pacientes[key];
 const fila=document.createElement('tr');
+const epicrisisURL = encodeURIComponent(p.EpicrisisDOCX || '');
+const referenciaURL = encodeURIComponent(p.ReferenciaDOCX || '');
+const trasladoURL = encodeURIComponent(p.TrasladoDOCX || '');
+const fotoURL = encodeURIComponent(p.FotoIdentidad || '');
+
 fila.innerHTML=`
 <td>${p.Expediente}</td>
 <td><strong>${p.Nombre}</strong></td>
@@ -283,10 +317,10 @@ fila.innerHTML=`
 <td>${p.HoraRegistro}</td>
 <td>
 <div class="actions">
-<button class="epi" onclick="abrirDocumento('${p.EpicrisisDOCX}')">Epicrisis</button>
-<button class="ref" onclick="abrirDocumento('${p.ReferenciaDOCX}')">Referencia</button>
-<button class="tras" onclick="abrirDocumento('${p.TrasladoDOCX}')">Traslado</button>
-<button class="foto" onclick="abrirDocumento('${p.FotoIdentidad}')">Foto</button>
+<button class="epi" onclick="abrirDocumento(decodeURIComponent('${epicrisisURL}'))">Epicrisis</button>
+<button class="ref" onclick="abrirDocumento(decodeURIComponent('${referenciaURL}'))">Referencia</button>
+<button class="tras" onclick="abrirDocumento(decodeURIComponent('${trasladoURL}'))">Traslado</button>
+<button class="foto" onclick="abrirDocumento(decodeURIComponent('${fotoURL}'))">Foto</button>
 </div>
 </td>`;
 
@@ -302,7 +336,9 @@ if(!response.ok) throw new Error('Error conexión');
 const datos=await response.json();
 pacientes={};
 
-const pacientesValidos=(datos||[]).filter(p=>p['NOMBRE ']||p['NUMERO DE IDENTIDAD ']);
+const pacientesValidos=(datos||[]).filter(p=>{
+return (p['NOMBRE '] || p['NUMERO DE IDENTIDAD '] || p['PRIMER APELLIDO ']);
+});
 document.getElementById('totalPacientes').textContent=pacientesValidos.length;
 
 pacientesValidos.forEach((p,index)=>{
@@ -317,10 +353,10 @@ Edad:p['EDAD']||'--',
 Diagnostico:p['1. DIAGNOSTICO ']||'No especificado',
 FechaRegistro:p['FECHA DE INGRESO']||'--',
 HoraRegistro:p['HORA DE INGRESO HOSPITALARIO']||'--',
-EpicrisisDOCX:p['Link to merged Doc - epicrisis 2.0']||'',
-ReferenciaDOCX:p['Link to merged Doc - referencias 2.0']||'',
-TrasladoDOCX:p['Link to merged Doc - traslado 2.0']||'',
-FotoIdentidad:p['FOTO DE LA IDENTIDAD ']||p['FOTO DE LA IDENTIDAD1']||''
+EpicrisisDOCX:p['Merged Doc URL - epicrisis 2.0'] || p['Link to merged Doc - epicrisis 2.0'] || p['Merged Doc ID - epicrisis 2.0'] || '',
+ReferenciaDOCX:p['Merged Doc URL - referencias 2.0'] || p['Link to merged Doc - referencias 2.0'] || p['Merged Doc ID - referencias 2.0'] || '',
+TrasladoDOCX:p['Merged Doc URL - traslado 2.0'] || p['Link to merged Doc - traslado 2.0'] || p['Merged Doc ID - traslado 2.0'] || '',
+FotoIdentidad:p['FOTO DE LA IDENTIDAD '] || p['FOTO DE LA IDENTIDAD1'] || p['FOTO DE LA IDENTIDAD 1'] || ''
 };
 });
 
