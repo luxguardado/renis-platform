@@ -3,105 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RENIS | Plataforma Renal</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<title>RENIS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{
-font-family:'Inter',sans-serif;
-background:#020617;
-background-image:radial-gradient(circle at top left,rgba(59,130,246,.15),transparent 30%),radial-gradient(circle at bottom right,rgba(139,92,246,.12),transparent 30%);
-color:#e2e8f0;
-min-height:100vh;
-}
-nav{padding:24px 8%;background:rgba(2,6,23,.92);border-bottom:1px solid rgba(255,255,255,.08)}
-.logo{
-font-family:'Orbitron',sans-serif;
-font-size:2.5rem;
-font-weight:900;
-letter-spacing:8px;
-background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-.hero,.section{padding:60px 8%}
-.hero{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+body{font-family:'Inter',sans-serif;background:#020617;color:#e2e8f0}
+nav{padding:20px 8%;background:#020617;border-bottom:1px solid rgba(255,255,255,.08)}
+.logo{font-family:'Orbitron',sans-serif;font-size:2.4rem;font-weight:900;letter-spacing:8px;background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.section{padding:40px 8%}
+.panel,.card{background:rgba(15,23,42,.88);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:24px;backdrop-filter:blur(12px)}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
 .hero h1{font-family:'Orbitron',sans-serif;font-size:4rem;margin-bottom:20px}
-.hero h1 span{background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{line-height:1.8;color:#cbd5e1}
-.card,.panel,.config-box{background:rgba(15,23,42,.75);border:1px solid rgba(255,255,255,.08);border-radius:24px;backdrop-filter:blur(16px)}
-.card,.config-box,.panel{padding:30px}
-.panel,.config-box{margin-bottom:30px}
-.btn{
-padding:16px 28px;
-border:none;
-border-radius:16px;
-background:linear-gradient(135deg,#2563eb,#7c3aed);
-color:white;
-font-weight:700;
-font-family:'Orbitron',sans-serif;
-cursor:pointer;
-margin-top:20px;
-}
-.section-title{font-family:'Orbitron',sans-serif;letter-spacing:2px;margin-bottom:20px;color:#93c5fd}
-input{
-width:100%;
-padding:16px;
-border-radius:14px;
-border:1px solid rgba(255,255,255,.08);
-background:#020617;
-color:white;
-}
-.table{width:100%;border-collapse:collapse;margin-top:20px}
-.table th,.table td{padding:16px;text-align:left}
-.table th{background:rgba(30,41,59,.8);font-family:'Orbitron',sans-serif}
-.table td{border-bottom:1px solid rgba(255,255,255,.06)}
-.actions{display:flex;gap:10px;flex-wrap:wrap}
-.actions button{padding:10px 14px;border:none;border-radius:12px;color:white;font-weight:700;font-family:'Orbitron',sans-serif;cursor:pointer}
-.epi{background:#2563eb}.ref{background:#16a34a}.tras{background:#9333ea}
-.status{margin-top:12px;font-weight:700;display:flex;align-items:center;gap:10px}
-.connection-indicator{
-width:14px;
-height:14px;
-border-radius:50%;
-background:#facc15;
-box-shadow:0 0 15px #facc15;
-animation:pulse 2s infinite;
-}
-.connection-online{background:#22c55e;box-shadow:0 0 18px #22c55e}
-.connection-offline{background:#ef4444;box-shadow:0 0 18px #ef4444}
-@keyframes pulse{
-0%{transform:scale(1);opacity:1}
-50%{transform:scale(1.2);opacity:.7}
-100%{transform:scale(1);opacity:1}
-}
-footer{padding:60px 8%;margin-top:60px}
-.footer-brand{font-family:'Orbitron',sans-serif;font-size:2.5rem;letter-spacing:8px;background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px}
+.hero span{background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.btn{padding:14px 20px;border:none;border-radius:14px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:white;font-family:'Orbitron',sans-serif;font-weight:700;cursor:pointer}
+input,select{width:100%;padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:#020617;color:white}
+.table{width:100%;border-collapse:collapse;font-size:.75rem;margin-top:20px}
+.table th,.table td{padding:10px 12px;text-align:left}
+.table th{background:rgba(30,41,59,.95);font-family:'Orbitron',sans-serif;color:#7dd3fc;font-size:.7rem;position:sticky;top:0}
+.table td{border-bottom:1px solid rgba(255,255,255,.05)}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.actions button{padding:6px 10px;border:none;border-radius:10px;color:white;font-size:.62rem;font-family:'Orbitron',sans-serif;font-weight:700;cursor:pointer}
+.epi{background:#2563eb}.ref{background:#16a34a}.tras{background:#9333ea}.foto{background:#0ea5e9}
+.status{display:flex;align-items:center;gap:10px;font-weight:700}
+.connection-indicator{width:14px;height:14px;border-radius:50%;background:#22c55e;box-shadow:0 0 18px #22c55e;animation:pulse 2s infinite}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+.footer-brand{font-family:'Orbitron',sans-serif;font-size:2rem;letter-spacing:8px;background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 @media(max-width:900px){.hero{grid-template-columns:1fr}.hero h1{font-size:2.8rem}}
 </style>
 </head>
 <body>
 
-<div id="loginScreen" style="position:fixed;inset:0;background:linear-gradient(135deg,#020617,#0f172a,#111827);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;">
-<div style="width:100%;max-width:420px;background:rgba(15,23,42,.92);border:1px solid rgba(255,255,255,.08);border-radius:28px;padding:40px;backdrop-filter:blur(18px);box-shadow:0 25px 80px rgba(0,0,0,.45)">
-<div style="text-align:center;margin-bottom:30px;">
-<h1 style="font-family:'Orbitron',sans-serif;font-size:3rem;letter-spacing:8px;background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">RENIS</h1>
-<p style="color:#94a3b8;margin-top:10px;">Acceso Clínico Seguro</p>
+<div id="loginScreen" style="position:fixed;inset:0;background:#020617;display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;">
+<div class="panel" style="width:100%;max-width:420px;">
+<div style="text-align:center;margin-bottom:25px;">
+<h1 class="logo">RENIS</h1>
+<p style="margin-top:10px;color:#94a3b8;">Acceso Clínico Seguro</p>
 </div>
 
-<input id="usuario" type="text" placeholder="Usuario" style="margin-bottom:18px;">
+<input id="usuario" type="text" placeholder="Usuario" style="margin-bottom:14px;">
 <input id="password" type="password" placeholder="Contraseña">
+<button class="btn" style="width:100%;margin-top:20px;" onclick="iniciarSesion()">Ingresar</button>
+<button class="btn" style="width:100%;margin-top:10px;background:linear-gradient(135deg,#0891b2,#06b6d4);" onclick="mostrarRegistro()">Registrarse</button>
 
-<button class="btn" style="width:100%;margin-top:25px;" onclick="iniciarSesion()">Ingresar al Sistema</button>
-
-<button class="btn" style="width:100%;margin-top:12px;background:linear-gradient(135deg,#0ea5e9,#06b6d4);" onclick="mostrarRegistro()">Registrarse</button>
-
-<div id="registroBox" style="display:none;margin-top:25px;padding:20px;border-radius:18px;background:rgba(2,6,23,.8);border:1px solid rgba(255,255,255,.08)">
-<h3 style="font-family:'Orbitron',sans-serif;color:#93c5fd;margin-bottom:15px;">Solicitud de Registro</h3>
-<input id="nuevoNombre" type="text" placeholder="Nombre completo" style="margin-bottom:12px;">
-<input id="nuevoApellido" type="text" placeholder="Apellido completo" style="margin-bottom:12px;">
-<input id="nuevoTelefono" type="text" placeholder="Número de teléfono" style="margin-bottom:12px;">
-<select id="nuevoRol" style="width:100%;padding:16px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:#020617;color:white;margin-bottom:12px;">
+<div id="registroBox" style="display:none;margin-top:20px;">
+<input id="nuevoNombre" type="text" placeholder="Nombre" style="margin-bottom:10px;">
+<input id="nuevoApellido" type="text" placeholder="Apellido" style="margin-bottom:10px;">
+<input id="nuevoTelefono" type="text" placeholder="Número de teléfono" style="margin-bottom:10px;">
+<select id="nuevoRol" style="margin-bottom:10px;">
 <option value="">Tipo de usuario</option>
 <option>Médico Especialista</option>
 <option>Médico General</option>
@@ -109,56 +57,47 @@ footer{padding:60px 8%;margin-top:60px}
 <option>Estudiante</option>
 <option>Otros</option>
 </select>
-<div style="padding:18px;border-radius:16px;background:rgba(15,23,42,.8);border:1px dashed rgba(56,189,248,.4);margin-bottom:14px;text-align:center;">
-<p style="color:#93c5fd;font-family:'Orbitron',sans-serif;margin-bottom:10px;">Registro Facial</p>
-<input id="registroFacial" type="file" accept="image/*" capture="user" style="width:100%;background:transparent;border:none;padding:0;">
-</div>
-<input id="nuevoUsuario" type="text" placeholder="Crear nombre de usuario" style="margin-bottom:12px;">
-<input id="nuevoPassword" type="password" placeholder="Crear contraseña segura" style="margin-bottom:12px;">
-<p style="color:#94a3b8;font-size:.85rem;line-height:1.6;text-align:center;">
-El usuario y contraseña quedarán registrados dentro del sistema RENIS.
-</p>
-<button class="btn" style="width:100%;margin-top:15px;background:linear-gradient(135deg,#16a34a,#22c55e);" onclick="registrarSolicitud()">Enviar Solicitud</button>
+<input id="registroFacial" type="file" accept="image/*" capture="user" style="margin-bottom:10px;">
+<input id="nuevoUsuario" type="text" placeholder="Crear usuario" style="margin-bottom:10px;">
+<input id="nuevoPassword" type="password" placeholder="Crear contraseña">
+<button class="btn" style="width:100%;margin-top:12px;background:linear-gradient(135deg,#16a34a,#22c55e);" onclick="registrarSolicitud()">Enviar Solicitud</button>
 </div>
 
-<div id="loginError" style="margin-top:18px;color:#ef4444;text-align:center;font-weight:600;display:none;">
-Usuario o contraseña incorrectos
-</div>
-
-<div style="margin-top:30px;text-align:center;color:#64748b;font-size:.9rem;line-height:1.8;">
-Sistema desarrollado por<br>
-<strong style="color:#93c5fd">Dr. Luis Ernesto Guardado</strong>
-</div>
+<div id="loginError" style="margin-top:18px;color:#ef4444;text-align:center;display:none;">Usuario o contraseña incorrectos</div>
 </div>
 </div>
 
 <div id="sistemaRENIS" style="display:none;">
-<nav>
-<div class="logo">RENIS</div>
-</nav>
+<nav><div class="logo">RENIS</div></nav>
 
-<section class="hero">
+<section class="section hero">
 <div>
 <h1>Sistema <span>RENIS</span></h1>
-<p>Plataforma hospitalaria renal con sincronización clínica en tiempo real.</p>
+<p style="line-height:1.8;color:#cbd5e1;margin-bottom:20px;">Plataforma renal digital conectada en tiempo real con Google Sheets y Autocrat.</p>
 <button class="btn" onclick="window.open('https://forms.gle/pAb2KBwuUJjMxMwP6')">Abrir Formulario</button>
 </div>
 <div class="card">
-<img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://forms.gle/pAb2KBwuUJjMxMwP6" style="width:100%;border-radius:20px" alt="QR">
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://forms.gle/pAb2KBwuUJjMxMwP6" style="width:100%;border-radius:20px;">
 </div>
 </section>
 
 <section class="section">
-<div class="config-box">
-<h2 class="section-title">Estado del Sistema</h2>
-<div id="sheetStatus" class="status">
+<div class="panel" style="margin-bottom:20px;">
+<div class="status">
 <div id="connectionLight" class="connection-indicator"></div>
 <span id="connectionText">Conectando con Google Sheets...</span>
 </div>
 </div>
 
-<div class="panel">
-<input id="busqueda" placeholder="Buscar paciente">
+<div class="panel" style="overflow:auto;max-height:78vh;">
+<div style="display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap;margin-bottom:18px;">
+<input id="busqueda" placeholder="Buscar paciente" style="max-width:420px;">
+<div class="card" style="padding:14px 18px;">
+<p style="font-size:.65rem;color:#64748b;text-transform:uppercase;">Pacientes</p>
+<h3 id="totalPacientes" style="font-family:'Orbitron',sans-serif;color:#7dd3fc;">0</h3>
+</div>
+</div>
+
 <table class="table" id="tabla">
 <thead>
 <tr>
@@ -169,14 +108,18 @@ Sistema desarrollado por<br>
 <th>Fecha</th>
 <th>Hora</th>
 <th>Documentos</th>
-<th>Identidad</th>
 </tr>
 </thead>
 <tbody></tbody>
 </table>
+</div>
+</section>
 
-<div id="usuariosRegistradosPanel" style="display:none;margin-top:30px;">
-<h2 class="section-title">Usuarios Registrados</h2>
+<section class="section">
+<div class="panel">
+<h2 style="font-family:'Orbitron',sans-serif;color:#93c5fd;margin-bottom:20px;">Centro de Administración</h2>
+<button class="btn" onclick="toggleUsuariosRegistrados()">Usuarios Registrados</button>
+<div id="usuariosRegistradosPanel" style="display:none;margin-top:20px;overflow:auto;">
 <table class="table" id="tablaUsuarios">
 <thead>
 <tr>
@@ -184,7 +127,6 @@ Sistema desarrollado por<br>
 <th>Teléfono</th>
 <th>Rol</th>
 <th>Usuario</th>
-<th>Dispositivo</th>
 <th>Control</th>
 </tr>
 </thead>
@@ -194,82 +136,71 @@ Sistema desarrollado por<br>
 </div>
 </section>
 
-<section class="section">
-<div class="panel">
-<h2 class="section-title">Centro de Administración RENIS</h2>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-bottom:30px;">
-<div class="card">
-<h3 style="font-family:'Orbitron',sans-serif;color:#93c5fd;margin-bottom:10px;">Solicitudes Pendientes</h3>
-<p id="solicitudesPendientes" style="font-size:2rem;font-weight:800;">0</p>
-<button class="btn" style="width:100%;margin-top:15px;background:linear-gradient(135deg,#0ea5e9,#2563eb);" onclick="toggleUsuariosRegistrados()">Usuarios Registrados</button>
-</div>
-<div class="card">
-<h3 style="font-family:'Orbitron',sans-serif;color:#93c5fd;margin-bottom:10px;">Usuarios Conectados</h3>
-<p id="usuariosConectados" style="font-size:2rem;font-weight:800;">0</p>
-</div>
-<div class="card">
-<h3 style="font-family:'Orbitron',sans-serif;color:#93c5fd;margin-bottom:10px;">Actividad Registrada</h3>
-<p id="actividadTotal" style="font-size:2rem;font-weight:800;">0</p>
-</div>
-</div>
-<table class="table" id="tablaAuditoria">
-<thead>
-<tr>
-<th>Usuario</th>
-<th>Dispositivo</th>
-<th>Fecha</th>
-<th>Hora</th>
-<th>Acción</th>
-<th>Control</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
-</div>
-</section>
-
-<footer>
+<footer class="section">
 <div class="footer-brand">RENIS</div>
-<p>Plataforma desarrollada por <strong style="color:#93c5fd">Dr. Luis Ernesto Guardado</strong></p>
+<p>Desarrollado por <strong style="color:#93c5fd;">Dr. Luis Ernesto Guardado</strong></p>
 </footer>
+</div>
 
 <script>
 const OPENSHEET_URL='https://opensheet.elk.sh/1cS2KN-prJmVvPxB4Tm5JrpxS_noDY4Nyj6KUZ73KE10/Respuestas%20de%20formulario%202';
+const SUPER_ADMIN='DrLuisGuardado';
+const SUPER_PASSWORD='hotwheels20.';
 
 let pacientes={};
-let auditoria=[];
 
 function actualizarConexion(online,texto){
-const status=document.getElementById('sheetStatus');
 const light=document.getElementById('connectionLight');
 const text=document.getElementById('connectionText');
-
 text.textContent=texto;
+light.style.background=online?'#22c55e':'#ef4444';
+light.style.boxShadow=online?'0 0 18px #22c55e':'0 0 18px #ef4444';
+}
 
-if(online){
-status.style.color='#4ade80';
-light.className='connection-indicator connection-online';
+function mostrarRegistro(){
+const box=document.getElementById('registroBox');
+box.style.display=box.style.display==='block'?'none':'block';
+}
+
+function registrarSolicitud(){
+const nombre=document.getElementById('nuevoNombre').value.trim();
+const apellido=document.getElementById('nuevoApellido').value.trim();
+const telefono=document.getElementById('nuevoTelefono').value.trim();
+const rol=document.getElementById('nuevoRol').value.trim();
+const usuario=document.getElementById('nuevoUsuario').value.trim();
+const password=document.getElementById('nuevoPassword').value.trim();
+
+if(!nombre||!apellido||!telefono||!rol||!usuario||!password){
+alert('Completa todos los campos');
+return;
+}
+
+const solicitudes=JSON.parse(localStorage.getItem('renis_solicitudes')||'[]');
+solicitudes.push({nombre,apellido,telefono,rol,usuario,password});
+localStorage.setItem('renis_solicitudes',JSON.stringify(solicitudes));
+alert('Solicitud enviada');
+}
+
+function iniciarSesion(){
+const usuario=document.getElementById('usuario').value.trim();
+const password=document.getElementById('password').value.trim();
+
+if(usuario===SUPER_ADMIN && password===SUPER_PASSWORD){
+localStorage.setItem('renis_auth','true');
+localStorage.setItem('renis_usuario',usuario);
+document.getElementById('loginScreen').style.display='none';
+document.getElementById('sistemaRENIS').style.display='block';
+renderizarUsuariosRegistrados();
 }else{
-status.style.color='#ef4444';
-light.className='connection-indicator connection-offline';
+document.getElementById('loginError').style.display='block';
 }
 }
 
-function registrarActividad(accion){
-const usuario=localStorage.getItem('renis_usuario') || 'Desconocido';
-const dispositivo=navigator.userAgent.includes('Mobile') ? 'Móvil' : 'Escritorio';
-
-const actividad={
-usuario,
-dispositivo,
-fecha:new Date().toLocaleDateString(),
-hora:new Date().toLocaleTimeString(),
-accion
-};
-
-auditoria.push(actividad);
-localStorage.setItem('renis_auditoria',JSON.stringify(auditoria));
-renderizarAuditoria();
+function verificarSesion(){
+if(localStorage.getItem('renis_auth')==='true'){
+document.getElementById('loginScreen').style.display='none';
+document.getElementById('sistemaRENIS').style.display='block';
+}
 }
 
 function toggleUsuariosRegistrados(){
@@ -277,133 +208,63 @@ if(localStorage.getItem('renis_usuario')!==SUPER_ADMIN){
 alert('Acceso restringido');
 return;
 }
-
 const panel=document.getElementById('usuariosRegistradosPanel');
-panel.style.display=panel.style.display==='block' ? 'none' : 'block';
+panel.style.display=panel.style.display==='block'?'none':'block';
 renderizarUsuariosRegistrados();
 }
 
 function renderizarUsuariosRegistrados(){
 const tabla=document.querySelector('#tablaUsuarios tbody');
-if(!tabla)return;
-
-const solicitudes=JSON.parse(localStorage.getItem('renis_solicitudes') || '[]');
-
+const solicitudes=JSON.parse(localStorage.getItem('renis_solicitudes')||'[]');
 tabla.innerHTML='';
-
-document.getElementById('solicitudesPendientes').textContent=solicitudes.length;
 
 solicitudes.forEach((u,index)=>{
 const fila=document.createElement('tr');
-
 fila.innerHTML=`
 <td>${u.nombre} ${u.apellido}</td>
 <td>${u.telefono}</td>
 <td>${u.rol}</td>
 <td>${u.usuario}</td>
-<td>${u.dispositivo.includes('Mobile') ? 'Móvil' : 'Escritorio'}</td>
-<td>
-<button onclick="eliminarUsuario(${index})" style="background:#ef4444;padding:10px 14px;border:none;border-radius:12px;color:white;font-weight:700;cursor:pointer;">Eliminar Acceso</button>
-</td>`;
-
+<td><button class="btn" style="padding:8px 12px;background:#ef4444;" onclick="eliminarUsuario(${index})">Eliminar</button></td>`;
 tabla.appendChild(fila);
 });
 }
 
 function eliminarUsuario(index){
-if(localStorage.getItem('renis_usuario')!==SUPER_ADMIN){
-alert('Solo el Super Administrador puede eliminar accesos');
-return;
-}
-
-const solicitudes=JSON.parse(localStorage.getItem('renis_solicitudes') || '[]');
-const eliminado=solicitudes[index];
-
-if(!eliminado)return;
-
+const solicitudes=JSON.parse(localStorage.getItem('renis_solicitudes')||'[]');
 solicitudes.splice(index,1);
 localStorage.setItem('renis_solicitudes',JSON.stringify(solicitudes));
-
-registrarActividad('Eliminó acceso de usuario');
 renderizarUsuariosRegistrados();
 }
 
-function renderizarAuditoria(){
-const tabla=document.querySelector('#tablaAuditoria tbody');
-if(!tabla)return;
-
-const datos=JSON.parse(localStorage.getItem('renis_auditoria') || '[]');
-auditoria=datos;
-
-tabla.innerHTML='';
-
-datos.forEach((a,index)=>{
-const fila=document.createElement('tr');
-fila.innerHTML=`
-<td>${a.usuario}</td>
-<td>${a.dispositivo}</td>
-<td>${a.fecha}</td>
-<td>${a.hora}</td>
-<td>${a.accion}</td>
-<td>${localStorage.getItem('renis_usuario')===SUPER_ADMIN ? `<button onclick="eliminarActividad(${index})" style="background:#ef4444;padding:8px 12px;border:none;border-radius:10px;color:white;cursor:pointer;">Eliminar</button>` : '<span style="color:#64748b">Protegido</span>'}</td>`;
-
-tabla.appendChild(fila);
-});
-
-document.getElementById('usuariosConectados').textContent=localStorage.getItem('renis_auth')==='true' ? '1' : '0';
-document.getElementById('actividadTotal').textContent=datos.length;
-}
-
-function eliminarActividad(index){
-if(localStorage.getItem('renis_usuario')!==SUPER_ADMIN){
-alert('Solo el Super Administrador puede eliminar registros');
-return;
-}
-auditoria.splice(index,1);
-localStorage.setItem('renis_auditoria',JSON.stringify(auditoria));
-renderizarAuditoria();
-}
-
 function abrirDocumento(url){
-if(!url || url.trim()===''){
-alert('Documento aún no generado por Autocrat');
+if(!url||String(url).trim()===''){
+alert('Documento aún no generado');
 return;
 }
 
 let cleanUrl=String(url).trim();
 
-console.log('URL original:',cleanUrl);
-
+try{
 if(cleanUrl.includes('HYPERLINK')){
-const match=cleanUrl.match(/https?:\/\/[^\"]+/);
-if(match){
-cleanUrl=match[0];
-}
+const match=cleanUrl.match(/https?:\/\/[^\")\s]+/);
+if(match&&match[0]) cleanUrl=match[0];
 }
 
-if(cleanUrl.includes('drive.google.com')){
-cleanUrl=cleanUrl
-.replace('/edit?usp=drivesdk','/view')
-.replace('/edit?usp=sharing','/view')
-.replace('/edit','/view');
+if(!cleanUrl.startsWith('http')&&cleanUrl.length>20){
+cleanUrl='https://docs.google.com/document/d/'+cleanUrl+'/edit';
 }
 
-if(cleanUrl.includes('docs.google.com/document/d/')){
-const docId=cleanUrl.split('/d/')[1]?.split('/')[0];
-if(docId){
-cleanUrl=`https://docs.google.com/document/d/${docId}/edit`;
-}
+if(cleanUrl.includes('/d/')){
+const id=cleanUrl.split('/d/')[1]?.split('/')[0];
+if(id) cleanUrl='https://docs.google.com/document/d/'+id+'/edit';
 }
 
-if(!cleanUrl.startsWith('http')){
-alert('El enlace del documento es inválido');
-console.error('URL inválida:',cleanUrl);
-return;
+window.open(cleanUrl,'_blank');
+}catch(error){
+console.error(error);
+alert('No se pudo abrir el documento');
 }
-
-console.log('Abriendo documento limpio:',cleanUrl);
-registrarActividad('Visualizó documento clínico');
-window.open(cleanUrl,'_blank','noopener,noreferrer');
 }
 
 function renderizarPacientes(){
@@ -412,7 +273,6 @@ tbody.innerHTML='';
 
 Object.keys(pacientes).forEach(key=>{
 const p=pacientes[key];
-
 const fila=document.createElement('tr');
 fila.innerHTML=`
 <td>${p.Expediente}</td>
@@ -426,11 +286,8 @@ fila.innerHTML=`
 <button class="epi" onclick="abrirDocumento('${p.EpicrisisDOCX}')">Epicrisis</button>
 <button class="ref" onclick="abrirDocumento('${p.ReferenciaDOCX}')">Referencia</button>
 <button class="tras" onclick="abrirDocumento('${p.TrasladoDOCX}')">Traslado</button>
-<button style="background:#f59e0b" onclick="abrirDocumento('${p.FotoIdentidad}')">Identidad</button>
+<button class="foto" onclick="abrirDocumento('${p.FotoIdentidad}')">Foto</button>
 </div>
-</td>
-<td>
-<button style="background:#0ea5e9;padding:10px 14px;border:none;border-radius:12px;color:white;font-weight:700;font-family:'Orbitron',sans-serif;cursor:pointer" onclick="abrirDocumento('${p.FotoIdentidad}')">Ver Foto</button>
 </td>`;
 
 tbody.appendChild(fila);
@@ -440,37 +297,35 @@ tbody.appendChild(fila);
 async function cargarPacientes(){
 try{
 const response=await fetch(OPENSHEET_URL);
-
-if(!response.ok){
-throw new Error('No se pudo conectar');
-}
+if(!response.ok) throw new Error('Error conexión');
 
 const datos=await response.json();
-
 pacientes={};
 
-(datos || []).forEach((p,index)=>{
+const pacientesValidos=(datos||[]).filter(p=>p['NOMBRE ']||p['NUMERO DE IDENTIDAD ']);
+document.getElementById('totalPacientes').textContent=pacientesValidos.length;
+
+pacientesValidos.forEach((p,index)=>{
 const nombre=(p['NOMBRE ']||'').trim();
 const apellido1=(p['PRIMER APELLIDO ']||'').trim();
 const apellido2=(p['SEGUNDO PELLIDO ']||'').trim();
 
 pacientes['PACIENTE_'+index]={
 Nombre:`${nombre} ${apellido1} ${apellido2}`.trim(),
-Expediente:p['NUMERO DE IDENTIDAD '] || 'SIN IDENTIDAD',
-Edad:p['EDAD'] || '--',
-Diagnostico:p['1. DIAGNOSTICO '] || p['2. DIAGNOSTICO'] || 'No especificado',
-FechaRegistro:p['FECHA DE INGRESO'] || '--',
-HoraRegistro:p['HORA DE INGRESO HOSPITALARIO'] || '--',
-EpicrisisDOCX:p['Link to merged Doc - epicrisis 2.0'] || p['Merged Doc URL - epicrisis 2.0'] || p['Merged Doc ID - epicrisis 2.0'] || '',
-ReferenciaDOCX:p['Link to merged Doc - referencias 2.0'] || p['Merged Doc URL - referencias 2.0'] || p['Merged Doc ID - referencias 2.0'] || '',
-TrasladoDOCX:p['Link to merged Doc - traslado 2.0'] || p['Merged Doc URL - traslado 2.0'] || p['Merged Doc ID - traslado 2.0'] || '',
-FotoIdentidad:p['FOTO DE LA IDENTIDAD '] || p['FOTO DE LA IDENTIDAD1'] || ''
+Expediente:p['NUMERO DE IDENTIDAD ']||'SIN IDENTIDAD',
+Edad:p['EDAD']||'--',
+Diagnostico:p['1. DIAGNOSTICO ']||'No especificado',
+FechaRegistro:p['FECHA DE INGRESO']||'--',
+HoraRegistro:p['HORA DE INGRESO HOSPITALARIO']||'--',
+EpicrisisDOCX:p['Link to merged Doc - epicrisis 2.0']||'',
+ReferenciaDOCX:p['Link to merged Doc - referencias 2.0']||'',
+TrasladoDOCX:p['Link to merged Doc - traslado 2.0']||'',
+FotoIdentidad:p['FOTO DE LA IDENTIDAD ']||p['FOTO DE LA IDENTIDAD1']||''
 };
 });
 
 renderizarPacientes();
-actualizarConexion(true,'RENIS conectado en tiempo real con Google Sheets');
-
+actualizarConexion(true,'RENIS conectado en tiempo real');
 }catch(error){
 console.error(error);
 actualizarConexion(false,'RENIS fuera de línea');
@@ -478,117 +333,24 @@ actualizarConexion(false,'RENIS fuera de línea');
 }
 
 function configurarBusqueda(){
-document.getElementById('busqueda').addEventListener('keyup',function(){
+const input=document.getElementById('busqueda');
+input.addEventListener('keyup',function(){
 const valor=this.value.toLowerCase();
 const filas=document.querySelectorAll('#tabla tbody tr');
-
-filas.forEach(fila=>{
-const texto=fila.innerText.toLowerCase();
-fila.style.display=texto.includes(valor)?'':'none';
+filas.forEach(f=>{
+const texto=f.innerText.toLowerCase();
+f.style.display=texto.includes(valor)?'':'none';
 });
 });
 }
 
 async function iniciarSistema(){
+verificarSesion();
 configurarBusqueda();
 await cargarPacientes();
-console.assert(OPENSHEET_URL.includes('opensheet'),'OpenSheet requerido');
 }
 
 iniciarSistema();
-</script>
-</div>
-
-<script>
-const SUPER_ADMIN='DrLuisGuardado';
-const SUPER_PASSWORD='hotwheels20.';
-
-function mostrarRegistro(){
-const box=document.getElementById('registroBox');
-box.style.display=box.style.display==='block' ? 'none' : 'block';
-}
-
-function registrarSolicitud(){
-const nombre=document.getElementById('nuevoNombre').value.trim();
-const apellido=document.getElementById('nuevoApellido').value.trim();
-const telefono=document.getElementById('nuevoTelefono').value.trim();
-const rol=document.getElementById('nuevoRol').value.trim();
-const usuario=document.getElementById('nuevoUsuario').value.trim();
-const password=document.getElementById('nuevoPassword').value.trim();
-const facial=document.getElementById('registroFacial').files[0]?.name || 'Sin captura';
-
-if(!nombre || !apellido || !telefono || !rol || !usuario || !password){
-alert('Completa usuario y contraseña');
-return;
-}
-
-const solicitudes=JSON.parse(localStorage.getItem('renis_solicitudes') || '[]');
-
-solicitudes.push({
-nombre,
-apellido,
-telefono,
-rol,
-facial,
-usuario,
-password,
-fecha:new Date().toLocaleDateString(),
-hora:new Date().toLocaleTimeString(),
-dispositivo:navigator.userAgent
-});
-
-localStorage.setItem('renis_solicitudes',JSON.stringify(solicitudes));
-
-alert('Solicitud enviada al Super Administrador');
-registrarActividad('Solicitud de acceso enviada');
-
-document.getElementById('nuevoNombre').value='';
-document.getElementById('nuevoApellido').value='';
-document.getElementById('nuevoTelefono').value='';
-document.getElementById('nuevoRol').value='';
-document.getElementById('nuevoUsuario').value='';
-document.getElementById('nuevoPassword').value='';
-document.getElementById('registroFacial').value='';
-}
-
-function iniciarSesion(){
-const usuario=document.getElementById('usuario').value.trim();
-const password=document.getElementById('password').value.trim();
-const error=document.getElementById('loginError');
-
-if(usuario===SUPER_ADMIN && password===SUPER_PASSWORD){
-localStorage.setItem('renis_auth','true');
-localStorage.setItem('renis_usuario',usuario);
-
-const fingerprint=btoa(navigator.userAgent + screen.width + screen.height + Intl.DateTimeFormat().resolvedOptions().timeZone);
-localStorage.setItem('renis_fingerprint',fingerprint);
-
-registrarActividad('Inicio de sesión autorizado');
-document.getElementById('loginScreen').style.display='none';
-document.getElementById('sistemaRENIS').style.display='block';
-renderizarAuditoria();
-}else{
-error.style.display='block';
-}
-}
-
-function verificarSesion(){
-const auth=localStorage.getItem('renis_auth');
-
-if(auth==='true'){
-document.getElementById('loginScreen').style.display='none';
-document.getElementById('sistemaRENIS').style.display='block';
-}
-}
-
-function cerrarSesion(){
-registrarActividad('Cierre de sesión');
-localStorage.removeItem('renis_auth');
-localStorage.removeItem('renis_usuario');
-location.reload();
-}
-
-verificarSesion();
 </script>
 </body>
 </html>
