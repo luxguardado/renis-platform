@@ -227,8 +227,8 @@ function mostrarRegistro(){
 const box=document.getElementById('registroBox');
 box.style.display=box.style.display==='block'?'none':'block';
 }
-
 function registrarSolicitud(){
+
 const nombre=document.getElementById('nuevoNombre').value.trim();
 const apellido=document.getElementById('nuevoApellido').value.trim();
 const telefono=document.getElementById('nuevoTelefono').value.trim();
@@ -236,10 +236,49 @@ const rol=document.getElementById('nuevoRol').value.trim();
 const usuario=document.getElementById('nuevoUsuario').value.trim();
 const password=document.getElementById('nuevoPassword').value.trim();
 
-if(!nombre||!apellido||!telefono||!rol||!usuario||!password){
+if(!nombre || !apellido || !telefono || !rol || !usuario || !password){
 alert('Completa todos los campos');
 return;
 }
+
+const usuarios=JSON.parse(
+localStorage.getItem('renis_solicitudes') || '[]'
+);
+
+const existe=usuarios.find(
+u => u.usuario.toLowerCase() === usuario.toLowerCase()
+);
+
+if(existe){
+alert('Ese usuario ya existe');
+return;
+}
+
+usuarios.push({
+nombre,
+apellido,
+telefono,
+rol,
+usuario,
+password,
+fechaRegistro:new Date().toISOString()
+});
+
+localStorage.setItem(
+'renis_solicitudes',
+JSON.stringify(usuarios)
+);
+
+alert('Usuario creado correctamente. Ya puede iniciar sesión.');
+
+document.getElementById('nuevoNombre').value='';
+document.getElementById('nuevoApellido').value='';
+document.getElementById('nuevoTelefono').value='';
+document.getElementById('nuevoRol').value='';
+document.getElementById('nuevoUsuario').value='';
+document.getElementById('nuevoPassword').value='';
+}
+
 
 const solicitudes=JSON.parse(localStorage.getItem('renis_solicitudes')||'[]');
 solicitudes.push({nombre,apellido,telefono,rol,usuario,password});
@@ -286,21 +325,50 @@ const max=Math.max(masculino,femenino,1);
 document.getElementById('graficoMasculino').style.height=((masculino/max)*220)+'px';
 document.getElementById('graficoFemenino').style.height=((femenino/max)*220)+'px';
 }
-
 function iniciarSesion(){
+
 const usuario=document.getElementById('usuario').value.trim();
 const password=document.getElementById('password').value.trim();
 
+// SUPER ADMIN
 if(usuario===SUPER_ADMIN && password===SUPER_PASSWORD){
+
 localStorage.setItem('renis_auth','true');
 localStorage.setItem('renis_usuario',usuario);
+localStorage.setItem('renis_rol','Administrador');
+
 document.getElementById('loginScreen').style.display='none';
 document.getElementById('sistemaRENIS').style.display='block';
+
 renderizarUsuariosRegistrados();
 document.getElementById('estadisticasBtn').style.display='inline-block';
-}else{
-document.getElementById('loginError').style.display='block';
+
+return;
 }
+
+// USUARIOS REGISTRADOS
+const usuarios=JSON.parse(
+localStorage.getItem('renis_solicitudes') || '[]'
+);
+
+const usuarioValido=usuarios.find(
+u => u.usuario===usuario && u.password===password
+);
+
+if(usuarioValido){
+
+localStorage.setItem('renis_auth','true');
+localStorage.setItem('renis_usuario',usuarioValido.usuario);
+localStorage.setItem('renis_rol',usuarioValido.rol);
+
+document.getElementById('loginScreen').style.display='none';
+document.getElementById('sistemaRENIS').style.display='block';
+
+return;
+}
+
+// ERROR
+document.getElementById('loginError').style.display='block';
 }
 
 function verificarSesion(){
