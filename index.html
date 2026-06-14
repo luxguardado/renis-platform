@@ -280,12 +280,6 @@ document.getElementById('nuevoPassword').value='';
 }
 
 
-const solicitudes=JSON.parse(localStorage.getItem('renis_solicitudes')||'[]');
-solicitudes.push({nombre,apellido,telefono,rol,usuario,password});
-localStorage.setItem('renis_solicitudes',JSON.stringify(solicitudes));
-alert('Solicitud enviada');
-}
-
 function cerrarSesion(){
 localStorage.removeItem('renis_auth');
 localStorage.removeItem('renis_usuario');
