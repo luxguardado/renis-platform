@@ -204,10 +204,35 @@ La enfermedad renal crónica es una condición progresiva donde los riñones pie
 <footer class="section">
 <div class="footer-brand">RENIS</div>
 <p>Desarrollado por <strong style="color:#93c5fd;">Dr. Luis Ernesto Guardado</strong></p>
+
+
+
+  
 </footer>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+
+
+  
 <script>
+  const firebaseConfig = {
+  apiKey: "AIzaSyAiPSpjPYKJs-ZBCQRL4WNbPVSO6dbP6lk",
+  authDomain: "renis-ca75f.firebaseapp.com",
+  projectId: "renis-ca75f",
+  storageBucket: "renis-ca75f.firebasestorage.app",
+  messagingSenderId: "623781074010",
+  appId: "1:623781074010:web:faf97cb7569cf27f3d7463"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+  
 const OPENSHEET_URL='https://opensheet.elk.sh/1cS2KN-prJmVvPxB4Tm5JrpxS_noDY4Nyj6KUZ73KE10/Respuestas%20de%20formulario%202';
 const SUPER_ADMIN='DrLuisGuardado';
 const SUPER_PASSWORD='hotwheels20.';
@@ -278,7 +303,6 @@ document.getElementById('nuevoRol').value='';
 document.getElementById('nuevoUsuario').value='';
 document.getElementById('nuevoPassword').value='';
 }
-
 
 function cerrarSesion(){
 localStorage.removeItem('renis_auth');
