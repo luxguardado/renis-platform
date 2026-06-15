@@ -341,7 +341,7 @@ const max=Math.max(masculino,femenino,1);
 document.getElementById('graficoMasculino').style.height=((masculino/max)*220)+'px';
 document.getElementById('graficoFemenino').style.height=((femenino/max)*220)+'px';
 }
-function iniciarSesion(){
+async function iniciarSesion(){
 
 const usuario=document.getElementById('usuario').value.trim();
 const password=document.getElementById('password').value.trim();
@@ -362,29 +362,26 @@ document.getElementById('estadisticasBtn').style.display='inline-block';
 return;
 }
 
-// USUARIOS REGISTRADOS
-const usuarios=JSON.parse(
-localStorage.getItem('renis_solicitudes') || '[]'
-);
+try{
 
-const usuarioValido=usuarios.find(
-u => u.usuario===usuario && u.password===password
+const credencial = await auth.signInWithEmailAndPassword(
+usuario,
+password
 );
-
-if(usuarioValido){
 
 localStorage.setItem('renis_auth','true');
-localStorage.setItem('renis_usuario',usuarioValido.usuario);
-localStorage.setItem('renis_rol',usuarioValido.rol);
+localStorage.setItem('renis_usuario',credencial.user.email);
 
 document.getElementById('loginScreen').style.display='none';
 document.getElementById('sistemaRENIS').style.display='block';
 
-return;
+}catch(error){
+
+console.error(error);
+document.getElementById('loginError').style.display='block';
+
 }
 
-// ERROR
-document.getElementById('loginError').style.display='block';
 }
 
 function verificarSesion(){
